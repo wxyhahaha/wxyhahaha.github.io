@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>js | Learning never ends</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="内存机制js 内存空间分为栈(stack)、堆(heap) 栈：数据在栈内存中的存储与使用方式类似于数据结构中的堆栈数据结构，遵循后进先出的原则。 堆： 12345var a1 &#x3D; 0; &#x2F;&#x2F; &#96;&#96;栈&#96;var a2 &#x3D; &quot;this is string&quot;; &#x2F;&#x2F; &#96;&#96;栈&#96;var a3 &#x3D; null; &#x2F;&#x2F; &#96;&#96;栈&#96;var b &#x3D; &amp;#123; m: 20 &amp;#125;; &#x2F;&#x2F; &#96;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js">
+<meta property="og:url" content="https://wxyhahaha.github.io/2022/07/01/js/readme/index.html">
+<meta property="og:site_name" content="Learning never ends">
+<meta property="og:description" content="内存机制js 内存空间分为栈(stack)、堆(heap) 栈：数据在栈内存中的存储与使用方式类似于数据结构中的堆栈数据结构，遵循后进先出的原则。 堆： 12345var a1 &#x3D; 0; &#x2F;&#x2F; &#96;&#96;栈&#96;var a2 &#x3D; &quot;this is string&quot;; &#x2F;&#x2F; &#96;&#96;栈&#96;var a3 &#x3D; null; &#x2F;&#x2F; &#96;&#96;栈&#96;var b &#x3D; &amp;#123; m: 20 &amp;#125;; &#x2F;&#x2F; &#96;">
+<meta property="og:locale">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/clip_image001.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20221332.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/image-20211128015555102.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-31%20010537.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/786a415a-5fee-11e6-9c11-45a2cfdf085c.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/e10bcb4c5b2d5fc20787089de0e10a5.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/bde7952e95c68bba437997ddc92d89f.png">
+<meta property="article:published_time" content="2022-07-01T03:06:16.029Z">
+<meta property="article:modified_time" content="2022-07-01T03:13:20.958Z">
+<meta property="article:author" content="wuxunyu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxyhahaha.github.io/images/clip_image001.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Learning never ends" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Learning never ends</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wxyhahaha.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-js/readme" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/01/js/readme/" class="article-date">
+  <time class="dt-published" datetime="2022-07-01T03:06:16.029Z" itemprop="datePublished">2022-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      js
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="内存机制"><a href="#内存机制" class="headerlink" title="内存机制"></a>内存机制</h1><p>js 内存空间分为栈(stack)、堆(heap)</p>
+<p>栈：数据在栈内存中的存储与使用方式类似于数据结构中的堆栈数据结构，遵循后进先出的原则。</p>
+<p><strong>堆：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a1 = <span class="number">0</span>; <span class="comment">// ``栈`</span></span><br><span class="line"><span class="keyword">var</span> a2 = <span class="string">&quot;this is string&quot;</span>; <span class="comment">// ``栈`</span></span><br><span class="line"><span class="keyword">var</span> a3 = <span class="literal">null</span>; <span class="comment">// ``栈`</span></span><br><span class="line"><span class="keyword">var</span> b = &#123; <span class="attr">m</span>: <span class="number">20</span> &#125;; <span class="comment">// ``变量``b``存在于栈中，``&#123;m: 20&#125; ``作为对象存在于堆内存中`</span></span><br><span class="line"><span class="keyword">var</span> c = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]; <span class="comment">// ``变量``c``存在于栈中，``[1, 2, 3] ``作为对象存在于堆内存中```</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/clip_image001.png" alt="clip_image001"></p>
+<blockquote>
+<p>基础数据类型： <code>Number</code> <code>String</code> <code>Null</code> <code>Undefined</code> <code>Boolean</code></p>
+</blockquote>
+<p><strong>内存泄漏：</strong></p>
+<p>当内存存在无法被垃圾回收时，这种就叫内存泄漏<br>一段代码解释：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dom处理</span></span><br><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">gteElementById</span>(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">el.<span class="property">onclick</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(el); <span class="comment">// 产生循环引用</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 闭包</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">counter</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> num = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    num++;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> count = <span class="title function_">counter</span>();</span><br><span class="line"><span class="title function_">count</span>(); <span class="comment">// num === 1</span></span><br><span class="line"><span class="title function_">count</span>(); <span class="comment">// num === 2</span></span><br><span class="line"><span class="comment">// num并不会被回收</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何解决：</strong></p>
+<ol>
+<li>手动清除引用</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> el = <span class="variable language_">document</span>.<span class="title function_">gteElementById</span>(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">el.<span class="property">onclick</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(el);</span><br><span class="line">  el = <span class="literal">null</span>; <span class="comment">// 执行完释放</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用弱引用-不计入 gc</li>
+</ol>
+<ul>
+<li>weakMap</li>
+<li>weakSet</li>
+</ul>
+<h2 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h2><p><strong>什么是调用栈？</strong><br><code>调用栈</code>指的是管理函数调用的一种数据结构，<code>栈</code>一种容器，遵循<code>先进后出</code>，<code>后进先出</code>。<br><strong>什么是栈溢出？</strong><br>一段代码解释：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">division</span>(<span class="params">x, y</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">division</span>(x, y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">division</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>函数递归调用，会出现压栈的行为，并不会弹出直到递归停止，当到达一定程度的数量，栈容器就会存在不够存放的情况，这种就叫栈溢出。<br><strong>如何解决栈溢出？</strong></p>
+<ol>
+<li>利用异步任务优化（宏任务&#x2F;微任务）</li>
+<li>尾调用优化</li>
+</ol>
+<h2 id="内存的生命周期"><a href="#内存的生命周期" class="headerlink" title="内存的生命周期"></a>内存的生命周期</h2><p>JS 环境中分配的内存一般有如下生命周期：</p>
+<ol>
+<li><p>_内存分配_：当我们申明变量、函数、对象的时候，系统会自动为他 们分配内存</p>
+</li>
+<li><p>_内存使用_：即读写内存，也就是使用变量、函数等</p>
+</li>
+<li><p>_内存回收_：使用完毕，由垃圾回收机制自动回收不再使用的内存</p>
+</li>
+</ol>
+<p>为了便于理解，我们使用一个简单的例子来解释这个周期。</p>
+<p>var a &#x3D; 20; &#x2F;&#x2F; 在内存中给数值变量分配空间</p>
+<p>alert(a + 100); &#x2F;&#x2F; 使用内存</p>
+<p>var a &#x3D; null; &#x2F;&#x2F; 使用完毕之后，释放内存空间</p>
+<h2 id="内存回收"><a href="#内存回收" class="headerlink" title="内存回收"></a>内存回收</h2><p>在局部作用域中，当函数执行完毕，局部变量也就没有存在的必要了，因此垃圾收集器很容易做出判断并回收。但是全局变量什么时候需要自动释放内存空间则很难判断，因此在我们的开发中，需要尽量避免使用全局变量，以确保性能问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fun1</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">&#x27;csa&#x27;</span>, <span class="attr">age</span>: <span class="number">24</span>&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fun2</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">&#x27;coder&#x27;</span>, <span class="attr">age</span>: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> obj;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f1 = <span class="title function_">fun1</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f2 = <span class="title function_">fun2</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，当执行<code>var f1 = fun1();</code>的时候，执行环境会创建一个<code>&#123;name:&#39;csa&#39;, age:24&#125;</code>这个对象，</p>
+<p>当执行<code>var f2 = fun2();</code>的时候，执行环境会创建一个<code>&#123;name:&#39;coder&#39;, age=2&#125;</code>这个对象</p>
+<p>然后在下一次垃圾回收来临的时候，会释放<code>&#123;name:&#39;csa&#39;, age:24&#125;</code>这个对象的内存，但并不会释放<code>&#123;name:&#39;coder&#39;, age:2&#125;</code>这个对象的内存。</p>
+<p>这就是因为在<code>fun2()</code>函数中将<code>&#123;name:&#39;coder, age:2&#39;&#125;</code>这个对象返回，并且将其引用赋值给了 f<code>2</code>变量，又由于<code>f2</code>这个对象属于全局变量，所以在页面没有卸载的情况下，<code>f2</code>所指向的对象<code>&#123;name:&#39;coder&#39;, age:2&#125;</code>是不会被回收的。</p>
+<h2 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h2><p>标记清除算法将“不再使用的对象”定义为“无法达到的对象”。简单来说，就是从根部（在 JS 中就是全局对象）出发定时扫描内存中的对象。凡是能从根部到达的对象，都是还需要使用的。那些无法由根部出发触及到的对象被标记为不再使用，稍后进行回收。</p>
+<h1 id="线程-VS-进程"><a href="#线程-VS-进程" class="headerlink" title="线程 VS 进程"></a>线程 VS 进程</h1><p>线程：多线程可以并行处理，但是<strong>线程是不能单独存在的，它是由进程来启动和管理的</strong>。<br>进程：<strong>一个进程就是一个程序的运行实例</strong>。详细的解释：启动一个程序的时候，操作系统回味该程序创建一块内存，用来存放代码、运行中的数据和一个执行任务的主线程</p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20221332.png" alt="屏幕截图 2021-11-30 221332"></p>
+<p>从图中可以看出<strong>线程依附于进程的，而进程中使用多线程并行处理能提升运算效率</strong></p>
+<h2 id="进程和线程关系"><a href="#进程和线程关系" class="headerlink" title="进程和线程关系"></a>进程和线程关系</h2><ol>
+<li>进程中的任意一线程执行出错，都会导致整个进程的崩溃</li>
+<li>线程之间共享进程中的数据</li>
+<li>当一个进程关闭之后，操作系统会回收进程所占用的内存</li>
+<li>进程之间的内容相互隔离，进行通讯需要使用用于进程通信（IPC）的机制了</li>
+</ol>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><h2 id="解决了什么问题"><a href="#解决了什么问题" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h2><p><strong><code>promise</code>解决的是<code>异步编码风格</code>的问题</strong></p>
+<ol>
+<li>异步编程的问题： 代码逻辑不连续</li>
+</ol>
+<h2 id="状态和方法"><a href="#状态和方法" class="headerlink" title="状态和方法"></a>状态和方法</h2><ol>
+<li><strong>有几种状态</strong></li>
+</ol>
+<ul>
+<li>pending</li>
+<li>fulfilled</li>
+<li>rejected</li>
+</ul>
+<ol start="2">
+<li><strong>状态是否可变</strong><br>状态不可变，resolve 之后不可 rejected，反之也是</li>
+<li><strong>有哪些方法，应用场景</strong></li>
+</ol>
+<ul>
+<li>then</li>
+<li>race</li>
+<li>all</li>
+<li>catch</li>
+<li>reject</li>
+<li>allsettled</li>
+<li>any</li>
+</ul>
+<ol>
+<li><p><strong>async&#x2F;await</strong></p>
+</li>
+<li><p><strong>catch 的捕获机制</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">executor</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> rand = <span class="title class_">Math</span>.<span class="title function_">random</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(rand)</span><br><span class="line">    <span class="keyword">if</span> (rand &gt; <span class="number">0.5</span>)</span><br><span class="line">        <span class="title function_">resolve</span>()</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="title function_">reject</span>()</span><br><span class="line">&#125;<span class="keyword">var</span> p0 = <span class="keyword">new</span> <span class="title class_">Promise</span>(executor);</span><br><span class="line"><span class="keyword">var</span> p1 = p0.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-1&quot;</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p3 = p1.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-2&quot;</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p4 = p3.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-3&quot;</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor)</span><br><span class="line">&#125;)</span><br><span class="line">p4.<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;error&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当第一个出错时。p4 仍可以捕获到错误。这样就解决了每个任务都需要单独处理异常的问题</p>
+</li>
+</ol>
+<p>​ <a target="_blank" rel="noopener" href="https://juejin.cn/post/6945319439772434469">https://juejin.cn/post/6945319439772434469</a></p>
+<ol start="3">
+<li></li>
+</ol>
+<p><strong>​ 思考</strong></p>
+<ol>
+<li><p><strong>Promise 中为什么要引入微任务？</strong></p>
+</li>
+<li><p><strong>Promise 中是如何实现回调函数返回值穿透的？</strong></p>
+</li>
+<li><p><strong>Promise 出错后，是怎么通过“冒泡”传递给最后那个捕获异常的函数？</strong></p>
+<p>promise 部分实现</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AlleyPromise</span> &#123;</span><br><span class="line">  <span class="comment">// 1、Promise三种状态</span></span><br><span class="line">  <span class="keyword">static</span> <span class="variable constant_">PENDING</span> = <span class="string">&quot;PENDING&quot;</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="variable constant_">FULFILED</span> = <span class="string">&quot;FULFILED&quot;</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="variable constant_">REJECTED</span> = <span class="string">&quot;REJECTED&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">callback</span>) &#123;</span><br><span class="line">    <span class="comment">// 容错处理</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> callback !== <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&quot;Promise resolver undefined is not a function&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始状态</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">promiseStatus</span> = <span class="title class_">AlleyPromise</span>.<span class="property">PENDING</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义resolve函数队列 reject函数队列</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">resolveQueues</span> = [];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">rejectQueues</span> = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义初始值</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">value</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用callback函数</span></span><br><span class="line">    <span class="title function_">callback</span>(<span class="variable language_">this</span>.<span class="property">_resolve</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>), <span class="variable language_">this</span>.<span class="property">_reject</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">_resolve</span>(<span class="params">val</span>) &#123;</span><br><span class="line">    <span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 更改成功状态</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">promiseStatus</span> !== <span class="title class_">AlleyPromise</span>.<span class="property">PENDING</span>) <span class="keyword">return</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">promiseStatus</span> = <span class="title class_">AlleyPromise</span>.<span class="property">FULFILED</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">value</span> = val;</span><br><span class="line">      <span class="keyword">let</span> handler;</span><br><span class="line">      <span class="keyword">while</span> ((handler = <span class="variable language_">this</span>.<span class="property">resolveQueues</span>.<span class="title function_">shift</span>())) &#123;</span><br><span class="line">        <span class="title function_">handler</span>(<span class="variable language_">this</span>.<span class="property">value</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">_reject</span>(<span class="params">val</span>) &#123;</span><br><span class="line">    <span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 更改失败状态</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">promiseStatus</span> !== <span class="title class_">AlleyPromise</span>.<span class="property">PENDING</span>) <span class="keyword">return</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">promiseStatus</span> = <span class="title class_">AlleyPromise</span>.<span class="property">REJECTED</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">value</span> = val;</span><br><span class="line">      <span class="keyword">let</span> handler;</span><br><span class="line">      <span class="keyword">while</span> ((handler = <span class="variable language_">this</span>.<span class="property">rejectQueues</span>.<span class="title function_">shift</span>())) &#123;</span><br><span class="line">        <span class="title function_">handler</span>(<span class="variable language_">this</span>.<span class="property">value</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">then</span>(<span class="params">resolveHandler, rejectHandler</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">function</span> <span class="title function_">newResolveHandler</span>(<span class="params">val</span>) &#123;</span><br><span class="line">        <span class="comment">// 首先判断 resolveHandler是否是一个函数</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> resolveHandler === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">          <span class="comment">/*</span></span><br><span class="line"><span class="comment">                获取resolveHandler 函数的返回值进行判断</span></span><br><span class="line"><span class="comment">                如果是promise则继续.then，不是则直接将结果返回</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">          <span class="keyword">let</span> result = <span class="title function_">resolveHandler</span>(val);</span><br><span class="line">          <span class="keyword">if</span> (result <span class="keyword">instanceof</span> <span class="title class_">AlleyPromise</span>) &#123;</span><br><span class="line">            result.<span class="title function_">then</span>(resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(result);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(val);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">function</span> <span class="title function_">newRejectHandler</span>(<span class="params">val</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> rejectHandler === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">          <span class="keyword">let</span> result = <span class="title function_">rejectHandler</span>(val);</span><br><span class="line">          <span class="keyword">if</span> (result <span class="keyword">instanceof</span> <span class="title class_">AlleyPromise</span>) &#123;</span><br><span class="line">            result.<span class="title function_">then</span>(resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="title function_">reject</span>(result);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(val);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">resolveQueues</span>.<span class="title function_">push</span>(newResolveHandler);</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">rejectQueues</span>.<span class="title function_">push</span>(newRejectHandler);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span>(rejectHandler) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">then</span>(<span class="literal">undefined</span>, rejectHandler);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">all</span>(<span class="params">iterator</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> len = iterator.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> vals = [];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      iterator.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        item</span><br><span class="line">          .<span class="title function_">then</span>(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">            ++n;</span><br><span class="line">            vals.<span class="title function_">push</span>(val);</span><br><span class="line">            <span class="keyword">if</span> (len === n) &#123;</span><br><span class="line">              <span class="title function_">resolve</span>(vals);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">          .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">reject</span>(e);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">race</span>(<span class="params">iterator</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      iterator.<span class="title function_">forEach</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        item</span><br><span class="line">          .<span class="title function_">then</span>(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(val);</span><br><span class="line">          &#125;)</span><br><span class="line">          .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">reject</span>(e);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">resolve</span>(<span class="params">val</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(val);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">reject</span>(<span class="params">val</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">reject</span>(val);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promise1 = <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//   reject(1213);</span></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>();</span><br><span class="line">  &#125;, <span class="number">2001</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// promise1</span></span><br><span class="line"><span class="comment">//   .then((res) =&gt; &#123;</span></span><br><span class="line"><span class="comment">//     return MyPromise.resolve(&quot;valu23e&quot;);</span></span><br><span class="line"><span class="comment">//   &#125;)</span></span><br><span class="line"><span class="comment">//   .then((res) =&gt; &#123;</span></span><br><span class="line"><span class="comment">//     console.log(res);</span></span><br><span class="line"><span class="comment">//   &#125;);</span></span><br><span class="line">promise1</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="number">123</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="keyword">new</span> <span class="title class_">AlleyPromise</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="title function_">res</span>(<span class="number">12</span>)))</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">23</span>, res);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">23</span>, res);</span><br><span class="line">  &#125;);</span><br><span class="line">a;</span><br></pre></td></tr></table></figure>
+
+<h1 id="宏任务和微任务"><a href="#宏任务和微任务" class="headerlink" title="宏任务和微任务"></a>宏任务和微任务</h1><ol>
+<li><strong>宏任务</strong></li>
+</ol>
+<ul>
+<li>渲染事件（解析 DOM、计算布局、绘制）</li>
+<li>用户交互事件（鼠标点击、滚动页面）</li>
+<li>js 脚本执行事件</li>
+<li>网络请求完成事件</li>
+</ul>
+<p><strong>为了协调这些任务在主线程上稳定执行，引入了消息队列和事件循环机制，<code>消息队列中</code>的任务，就称为<code>宏任务</code>，<code>消息队列</code>中的任务是通过事件循环系统执行的</strong></p>
+<ol start="2">
+<li><strong>微任务</strong></li>
+</ol>
+<ul>
+<li><p><code>MutationObserver</code>监控某 DOM 节点，通过 js 操作节点，节点发生变化，产生记录 DOM 变化的微任务</p>
+</li>
+<li><p>使用<code>Promise</code>，调用<code>Promise.resolve()</code>或者<code>Promise.reject()</code>产生微任务</p>
+</li>
+</ul>
+<p>执行脚本时，在宏任务执行过程中有时候会产生很多微任务，引擎会创建一个微任务队列，来存放微任务<br><strong>微任务执行时机：</strong><br><strong>当前宏任务执行完成时，清空栈时，引擎检查微任务队列，按顺序执行队列中的任务</strong><br><strong>如果微任务队列执行中产生新的微任务，同样的会加到同个微任务队列中，循环执行。并不会推迟到下个宏任务中执行</strong></p>
+<p><strong>结论：</strong></p>
+<ul>
+<li><p>微任务和宏任务时绑定的，每个宏任务在执行时会创建自己的微任务队列。</p>
+</li>
+<li><p>微任务时长会影响到当前宏任务的时长</p>
+</li>
+<li><p>在一个宏任务中，分别创建一个用于回调的宏任务和微任务，无论什么情况，微任务都早于宏任务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">cb</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;谁先执行呢&quot;</span>);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout执行&quot;</span>);</span><br><span class="line">    <span class="title function_">cb</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>();</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Promise执行&quot;</span>);</span><br><span class="line">    <span class="title function_">cb</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>(<span class="function">() =&gt;</span> &#123;&#125;);</span><br><span class="line"><span class="comment">// 谁先执行呢</span></span><br><span class="line"><span class="comment">// Promise执行</span></span><br><span class="line"><span class="comment">// setTimeout执行</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">executor</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> rand = <span class="title class_">Math</span>.<span class="title function_">random</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(rand);</span><br><span class="line">  <span class="keyword">if</span> (rand &gt; <span class="number">0.5</span>) <span class="title function_">resolve</span>();</span><br><span class="line">  <span class="keyword">else</span> <span class="title function_">reject</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p0 = <span class="keyword">new</span> <span class="title class_">Promise</span>(executor);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = p0.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-1&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p3 = p1.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-2&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p4 = p3.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;succeed-3&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(executor);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">p4.<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>作用域，可以说是一套储存变量，访问变量的一套规则。指的是在这规则约束下，变量，函数，标识符可访问的区域。<br>js 作用域是<code>词法作用域</code>，一种静态作用域，静态作用域是<code>代码编译阶段就决定好了，跟函数调用没有关系</code><br>有三种作用域：<br>全局作用域<br>函数作用域<br>块级作用域</p>
+<h1 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h1><p>当作用域套作用域时，就形成了一条作用域链。<br>全局套函数<br>函数套函数<br>比如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>作用： 可让 a 函数可以访问到外部作用的变量，查找变量时的这条链就称为作用域链</p>
+<blockquote>
+<p>但注意，作用域链时基于词法作用域的，也就是说作用域链的形成是代码书写阶段就已经确认下来</p>
+</blockquote>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>本质： 根据词法作用域，内部函数总是可以访问外部函数中声明的变量，当通过调用外部函数返回的内部函数时，外部执行完，但是内部函数引用外部函数的变量依然保存在内存，把这个些变量的结合称之为闭包。外部函数的闭包</p>
+<h1 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h1><p>执行上下文，是代码的执行环境。执行上下文可分为以下：</p>
+<ol>
+<li>全局执行上下文：</li>
+</ol>
+<ul>
+<li>window 对象</li>
+<li>this</li>
+<li>其他变量对象</li>
+</ul>
+<ol start="2">
+<li>函数执行上下文</li>
+</ol>
+<ul>
+<li>arguments</li>
+<li>this（不固定，根据谁引用就指向谁）</li>
+<li>其他活动对象</li>
+</ul>
+<ol start="3">
+<li>eval 执行上下文</li>
+</ol>
+<p>分仔细还可以将执行上下文分为：</p>
+<ul>
+<li>变量环境 （var 等定义的变量）</li>
+<li>词法环境（let、const 等定义的变量）</li>
+<li>作用域链（scope）</li>
+<li>this</li>
+</ul>
+<p>执行上下文的生命周期：<br>创建阶段：</p>
+<ol>
+<li>生成变量对象，安排内存</li>
+<li>确认 this</li>
+<li>确认作用域<br>执行阶段：</li>
+<li>变量赋值</li>
+</ol>
+<blockquote>
+<p>变量提升，也就是在全局上下文创建阶段，给变量初始化安排内存，这时并未赋值</p>
+</blockquote>
+<h1 id="调用栈-1"><a href="#调用栈-1" class="headerlink" title="调用栈"></a>调用栈</h1><p>先说结论，调用栈呢，是一种数据栈的数据结构管理执行上下文的，当执行环境执行多个函数时，也就是执行上下文执行调用函数时，会按顺序压入栈，执行到谁就先压入，遵循先进后出，执行完立即弹出。<br>从调用栈理解作用域：<br>我们所说，外部函数往往是访问不到内部函数的，这是为什么呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(bb);</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> bb = <span class="string">&quot;a拿不到我&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">b</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">a</span>();</span><br></pre></td></tr></table></figure>
+
+<p>调用栈的执行情况： 此时<code>b</code>位于栈顶，执行完直接弹出栈，<code>b执行上下文被销毁</code>，<code>a</code>自然是拿不到<code>bb这个处于b作用域的变量</code></p>
+<h1 id="执行环境中的变量对象和活动对象"><a href="#执行环境中的变量对象和活动对象" class="headerlink" title="执行环境中的变量对象和活动对象"></a>执行环境中的变量对象和活动对象</h1><p>概念：每一个执行环境中都有一个与之关联的<code>变量对象</code>。如果这个环境是函数，那么将<code>活动对象</code>作为<code>变量对象</code>,<code>活动对象</code>最开始只包含一个变量，<code>arguments</code>对象。作用域链中的下一个比那辆对象来自外部环境<br>扩展：当执行流进入一个函数，函数的环境推入一个环境栈中，执行之后，再将环境弹出。<br>代码在一个环境中执行时，会创建变量对象的<code>作用域链</code>。作用域用途，是保证对执行环境有权访问的所有变量和函数的有序访问</p>
+<h1 id="this-那些事"><a href="#this-那些事" class="headerlink" title="this 那些事"></a>this 那些事</h1><p><code>this</code>对象是在运行时基于函数的执行环境绑定的</p>
+<ol>
+<li><strong>默认绑定规则</strong>：<code>this</code>指向<code>window</code></li>
+<li><strong>隐式绑定规则</strong>：函数被当作对象的方法调用时，<code>this</code>指向对象（谁调用就指向谁）</li>
+<li><strong>显示绑定规则</strong>：<code>call</code>、<code>apply</code>、<code>bind</code>改变<code>this</code>指向</li>
+</ol>
+<h1 id="bind、apply、call-实现"><a href="#bind、apply、call-实现" class="headerlink" title="bind、apply、call 实现"></a>bind、apply、call 实现</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">p</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>, p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// call</span></span><br><span class="line">fn.<span class="title function_">call</span>(obj, <span class="string">&quot;wuxunyu&quot;</span>); <span class="comment">// 123,wuxunyu</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// bind</span></span><br><span class="line"><span class="keyword">const</span> fn1 = fn.<span class="title function_">bind</span>(obj);</span><br><span class="line"><span class="title function_">fn1</span>(<span class="string">&quot;wuxunyu&quot;</span>); <span class="comment">// 123, wuxunyu</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// apply</span></span><br><span class="line">fn.<span class="title function_">apply</span>(obj, [<span class="string">&quot;wuxunyu&quot;</span>]); <span class="comment">// 123, wuxunyu</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myCall</span> = <span class="keyword">function</span> (<span class="params">context, ...arg</span>) &#123;</span><br><span class="line">  context.<span class="property">fn</span> = <span class="variable language_">this</span>;</span><br><span class="line">  context.<span class="title function_">fn</span>(...arg);</span><br><span class="line">  <span class="keyword">delete</span> context.<span class="property">fn</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myBind</span> = <span class="keyword">function</span> (<span class="params">context, ...arg</span>) &#123;</span><br><span class="line">  context.<span class="property">fn</span> = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    context.<span class="title function_">fn</span>(...arg);</span><br><span class="line">    <span class="keyword">delete</span> context.<span class="property">fn</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myApply</span> = <span class="keyword">function</span> (<span class="params">context, arg</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(arg)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  context.<span class="property">fn</span> = <span class="variable language_">this</span>;</span><br><span class="line">  context.<span class="title function_">fn</span>(...arg);</span><br><span class="line">  <span class="keyword">delete</span> context.<span class="property">fn</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="原型对象和原型链"><a href="#原型对象和原型链" class="headerlink" title="原型对象和原型链"></a>原型对象和原型链</h1><ol>
+<li><strong>原型对象</strong></li>
+</ol>
+<ul>
+<li><p>概念：每一个构造函数中都有一个对象，<code>prototype</code>，称为原型对象。</p>
+</li>
+<li><p>构造函数、原型和实例的关系：原型对象<code>prototype</code>都包含一个指向构造函数<code>constructor</code>的指针，而实例都包含一个指向原型对象的内部指针<code>__proto__</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">SuperType</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">property</span> = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> superType = <span class="keyword">new</span> <span class="title class_">SuperType</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(superType.<span class="property">__proto__</span> === <span class="title class_">SuperType</span>.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li><strong>原型链</strong><br>假设，让<code>A</code>的原型对象<code>prototype</code>等于另一个类型<code>B</code>的实例，此时<code>A</code>原型对象<code>prototype</code>将包含一个指向<code>B</code>原型的指针<code>__proto__</code>,相应的，<code>B</code>原型中也包含着一个指向另一个构造函数的指针。假如，又让<code>C</code>的原型对象<code>prototype</code>等于<code>A</code>的实例,如此层层递进，就构成了实例与原型的链条，这就是原型链的基本概念</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">SuperType</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">property</span> = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">SuperType</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getSuperValue</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">property</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">SubType</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">subproperty</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 继承了 SuperType</span></span><br><span class="line"><span class="title class_">SubType</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">SuperType</span>();</span><br><span class="line"><span class="title class_">SubType</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getSubValue</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">subproperty</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> <span class="title class_">SubType</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance.<span class="title function_">getSuperValue</span>()); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20211128015555102.png" alt="image-20211128015555102"></p>
+<blockquote>
+<p>原型链的基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法</p>
+</blockquote>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&quot;child&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">eat</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line"></span><br><span class="line">child1.<span class="property">eat</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line">child1.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line">child2.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+<p>缺点: 子共用同个属性方法，同个引用类型</p>
+<h2 id="借用构造函数继承"><a href="#借用构造函数继承" class="headerlink" title="借用构造函数继承"></a>借用构造函数继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>); <span class="comment">// 将parent的this指向child，将parent方法转移到child</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&quot;child&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">eat</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line">child1.<span class="property">eat</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line">child1.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line">child2.<span class="property">eat</span>; <span class="comment">// [1,2,3]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">child1.<span class="title function_">getName</span>() <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<p>解决了原型链继承方法缺点<br>缺点:  子获取不到父原型上的属性方法</p>
+<h2 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>); <span class="comment">// 将parent的this指向child，将parent方法转移到child</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&quot;child&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">eat</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent</span>();</span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Child</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line">child1.<span class="property">eat</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line">child1.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line">child2.<span class="property">eat</span>; <span class="comment">// [1,2,3]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">child1.<span class="title function_">getName</span>() <span class="comment">// child</span></span><br></pre></td></tr></table></figure>
+<p>解决了借用构造函数获取不到父类原型上的属性方法<br>缺点: 调用了两次父类</p>
+<h2 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> child = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;child&#x27;</span>,</span><br><span class="line">  <span class="attr">eat</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">  <span class="attr">getName</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="title class_">Object</span>.<span class="title function_">create</span>(child);</span><br><span class="line"><span class="keyword">const</span> child2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(child);</span><br><span class="line">child1.<span class="property">eat</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line">child1.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line">child2.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>缺点: 虽然简洁，但是同样存在引用同个引用问题</p>
+<h2 id="寄生式继承"><a href="#寄生式继承" class="headerlink" title="寄生式继承"></a>寄生式继承</h2><p>与原型式差不多，只不过多了可以扩展父类的方法</p>
+<h2 id="寄生组合式继承"><a href="#寄生组合式继承" class="headerlink" title="寄生组合式继承"></a>寄生组合式继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">.... <span class="comment">// 与组合继承一样，只不过prototype的赋值有些不同</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Child</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child1 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line"><span class="keyword">const</span> child2 = <span class="keyword">new</span> <span class="title class_">Child</span>();</span><br><span class="line">child1.<span class="property">eat</span>.<span class="title function_">push</span>(<span class="number">4</span>);</span><br><span class="line">child1.<span class="property">eat</span>; <span class="comment">// [1,2,3,4]</span></span><br><span class="line">child2.<span class="property">eat</span>; <span class="comment">// [1,2,3]</span></span><br></pre></td></tr></table></figure>
+<p>最优继承方式</p>
+<h1 id="new-实现"><a href="#new-实现" class="headerlink" title="new 实现"></a>new 实现</h1><ol>
+<li><strong>创建空对象 <code>obj</code> &#x3D; {}</strong></li>
+<li><strong><code>this</code>指向新对象，并执行构造函数，并获取返回结果</strong></li>
+<li><strong>设置原型链，新对象原型对象指向构造函数<code>prototype</code></strong></li>
+<li><strong>判断构造函数返回结果是否为对象，是则返回，否则返回由<code>new</code>创建的对象<code>a</code></strong></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">myNew</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">const</span> constructor = [].<span class="property">shift</span>.<span class="title function_">call</span>(<span class="variable language_">arguments</span>);</span><br><span class="line">  <span class="keyword">const</span> result = constructor.<span class="title function_">apply</span>(obj, <span class="variable language_">arguments</span>); <span class="comment">// 改变构造函数中的this</span></span><br><span class="line">  obj.<span class="property">__proto__</span> = constructor.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">// obj的原型对象指向构造函数prototype</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> result === <span class="string">&quot;object&quot;</span> ? result : obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">myNew</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">a</span> = <span class="number">2323</span>;</span><br><span class="line">&#125;); <span class="comment">// &#123;a: 2323&#125;</span></span><br><span class="line"><span class="keyword">new</span> (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">a</span> = <span class="number">2323</span>;</span><br><span class="line">&#125;)(); <span class="comment">// &#123;a: 2323&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="instanceOf-实现"><a href="#instanceOf-实现" class="headerlink" title="instanceOf 实现"></a>instanceOf 实现</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">A</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="title function_">A</span>();</span><br><span class="line">a <span class="keyword">instanceof</span> A; <span class="comment">// true</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="title class_">Object</span>; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">myInstanceof</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> p = a.<span class="property">__proto__</span>;</span><br><span class="line">  <span class="keyword">while</span> (p) &#123;</span><br><span class="line">    <span class="keyword">if</span> (p === b.<span class="property"><span class="keyword">prototype</span></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    p = p.<span class="property">__proto__</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><h2 id="如何让网络通信更快"><a href="#如何让网络通信更快" class="headerlink" title="如何让网络通信更快"></a>如何让网络通信更快</h2><h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><p>CDN 全称 content delivery network，又称<code>内容分发网络</code>，CDN 有两个指标，<code>全局负载均衡</code>和<code>缓存系统</code></p>
+<ol>
+<li>全局负载均衡<br>用户在访问服务器的时候，首先要向 <code>DNS 服务器</code>发起请求，经过解析后返回到这个网站域名的注册服务器去解析，<code>DNS 解析服务器</code>会**解析到另外一个域名，这个域名最终指向<code> CDN 全局负载均衡服务器</code>**，然后智能的挑选一个就近的最佳节点。</li>
+<li>缓存系统(命中率&amp;回源率)<ul>
+<li>命中率: <code>命中缓存的次数/总请求次数</code></li>
+<li>回源率: 没命中缓存，即从服务器拿数据</li>
+</ul>
+</li>
+</ol>
+<h3 id="减少请求次数"><a href="#减少请求次数" class="headerlink" title="减少请求次数"></a>减少请求次数</h3><h4 id="资源合并"><a href="#资源合并" class="headerlink" title="资源合并"></a>资源合并</h4><p>http 请求是需要建立连接的，这个过程是需要时间的，当多个资源有多个请求时，明显的很耗费时间<br>解决方案：</p>
+<ol>
+<li>雪碧图</li>
+</ol>
+<h4 id="域名分片"><a href="#域名分片" class="headerlink" title="域名分片"></a>域名分片</h4><p>同个域名浏览器可以有 6-8 个网络连接（tcp 连接），<strong>以 <code>Chrome</code> 为例，限制一个域名同时并发 6 个连接</strong><br>解决方案：</p>
+<ol>
+<li>多域名</li>
+</ol>
+<h4 id="HTTP-缓存"><a href="#HTTP-缓存" class="headerlink" title="HTTP 缓存"></a>HTTP 缓存</h4><p><a href="../http/readme.md#%E7%BC%93%E5%AD%98">HTTP 缓存</a></p>
+<h3 id="压缩资源"><a href="#压缩资源" class="headerlink" title="压缩资源"></a>压缩资源</h3><h4 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h4><ol>
+<li>gzip 与新的 br</li>
+</ol>
+<p>gzip: 运用广泛<br>br: 由 <code>Chrome</code> 开发的新的压缩算法，性能比 <code>gzip</code> 高由于浏览器兼容问题，运用不广</p>
+<h4 id="代码文件压缩"><a href="#代码文件压缩" class="headerlink" title="代码文件压缩"></a>代码文件压缩</h4><ol>
+<li>HTML&#x2F;CSS&#x2F;JS 中的注释、空格、长变量名等</li>
+</ol>
+<h4 id="静态资源"><a href="#静态资源" class="headerlink" title="静态资源"></a>静态资源</h4><ol>
+<li>字体图标，去除元数据（图片中的作者，时间，大小等信息），缩小尺寸及分辨率，使用 <code>jpg</code> 或者 <code>webp</code> 格式</li>
+</ol>
+<h4 id="头与报文"><a href="#头与报文" class="headerlink" title="头与报文"></a>头与报文</h4><ol>
+<li><code>http1.1</code> 中减少不必要的头</li>
+<li>减少 <code>cookie</code> 数据量</li>
+</ol>
+<h3 id="HTTP2-协议"><a href="#HTTP2-协议" class="headerlink" title="HTTP2 协议"></a>HTTP2 协议</h3><p><code>HTTP2 协议</code>本身就比 <code>HTTP1.1</code> 快上很多!</p>
+<p>那么快在哪？</p>
+<h4 id="头部压缩"><a href="#头部压缩" class="headerlink" title="头部压缩"></a>头部压缩</h4><p><strong>臃肿的请求</strong>头（平均测试为 <code>460</code> 字节）是使之变慢的重要原因之一，HTTP2 为此的解决方案：</p>
+<ol>
+<li>专门的 HPACK 压缩算法<ul>
+<li>索引表</li>
+<li>霍夫曼编码</li>
+</ul>
+</li>
+</ol>
+<p><strong>索引表：</strong></p>
+<p>需要<code>客户端</code>和<code>服务端</code>共同维护，分为一个静态表 <code>Static Table</code>（<strong>静态表存放几乎所有常用的头信息键值对</strong>），一个动态表 <code>Dynamic Table</code>。</p>
+<ul>
+<li>当客户端请求的时候只需要发送表<code>Static Table</code>中的索引值比如: <code>:method=GET</code> 用 2 表示等，并且值会通过<strong>霍夫曼编码</strong>进行压缩字符</li>
+<li>当发送了一个在<code>Static Table</code>中的 <code>User-Agent</code>，索引为 <code>58，但是他的值不在``Static Table</code>中，请求的时候用 <code>58</code>，表示 <code>User-Agent</code>，服务器接收后会将 <code>User-Agent</code> 添加到<code>Dynamic Table</code>，缓存起来</li>
+</ul>
+<h4 id="二进制帧"><a href="#二进制帧" class="headerlink" title="二进制帧"></a>二进制帧</h4><p>在 HTTP1.1 文本字符分割的数据流，导致解析慢且容易出错，解决方案：<br><strong>二进制帧：</strong></p>
+<ol>
+<li>帧长度</li>
+<li>帧类型</li>
+<li>帧标识</li>
+</ol>
+<h4 id="链路复用-多路复用"><a href="#链路复用-多路复用" class="headerlink" title="链路复用(多路复用)"></a>链路复用(多路复用)</h4><p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-31%20010537.png" alt="屏幕截图 2021-12-31 010537"></p>
+<blockquote>
+<p>简单来说： <strong>一个域名只维护一个 TCP，一个 TCP 可以并发多个 HTTP 请求</strong></p>
+</blockquote>
+<p>那么多路复用有什么优点以及怎么在现实体现它的快速呢：<br>假设，有服务端的最大并发 <code>TCP</code> 量为 <code>600，那么在</code> <code>HTTP1.1</code> 下，一个客户端最大的 <code>TCP</code> 并发为 <code>6</code> 个，那么在最大的并发量下，可接纳最多的用户为<code> 600 / 6 = 100</code> 个，那如果第 <code>101</code> 一个发起请求，那么还要等那 <code>100</code> 用户其中之一的 <code>TCP</code> 完成之后才开始<code>（队头阻塞</code>）。那么在 <code>HTTP2</code> 的多路复用下：<br><strong>一个域名共用一个 TCP，意味着可达到的并发用户量为 600 &#x2F; 1 &#x3D; 600 个！与服务端并发量达到一致。并且一个 TCP 可并发多个 HTTP 请求</strong>，再利用上述所说二进制分层实现并行请求，任何时候都可以发送请求给服务器解决对队头阻塞问题</p>
+<h2 id="如何让数据处理更高效"><a href="#如何让数据处理更高效" class="headerlink" title="如何让数据处理更高效"></a>如何让数据处理更高效</h2><ol>
+<li>HTML 语义标签加强 DOM 解析</li>
+<li>多使用为元素，减少 JS 多 DOM 的查找遍历</li>
+<li>能用 HTML&#x2F;CSS 实现的效率就不用用 JS</li>
+<li>逻辑与展示解耦，避免不必要的 JS 引擎启动（HTML 出现 js 代码）</li>
+<li>减少作用域查找和闭包，避免&#x3D;&#x3D;</li>
+<li>SSR 服务端渲染（next.js，nuxt.js）</li>
+</ol>
+<h3 id="SSR-服务端渲染"><a href="#SSR-服务端渲染" class="headerlink" title="SSR 服务端渲染"></a>SSR 服务端渲染</h3><p>在客户端请求服务器的时候，服务器到数据库种获取数据，并且在服务器种将 vue 等组件，数据等转化为 HTML，服务器再将 HTML 返回给客户端。<strong>这个在服务器将组件数据等转为 HTML 的过程就叫服务端渲染</strong><br>要了解 SSR，首先要了解同构的概念。</p>
+<h4 id="同构"><a href="#同构" class="headerlink" title="同构"></a>同构</h4><p>在服务端渲染中，有两种页面渲染方式，</p>
+<ol>
+<li>前端服务器通过请求服务器获取数据并组装 HTML 返回给浏览器，浏览器直接解析 HTM 给页面</li>
+<li>浏览器在交互过程中，请求新的数据并动态更新渲染页面</li>
+</ol>
+<p>这两种有一点不同点，也就是第一种是在服务器将 HTML 返回给客户端，而第二种是在客户端组成 HTML，运行环境不一样那么同构要做的事就是用一套代码兼容这两种情况</p>
+<h4 id="同构的条件"><a href="#同构的条件" class="headerlink" title="同构的条件"></a>同构的条件</h4><p>对于同构的应用来说，必须实现客户端和服务端的路由、模型组件、模型数据的共享。</p>
+<p>SSR 图解：<br><img src="/images/786a415a-5fee-11e6-9c11-45a2cfdf085c.png" alt="SSR图解"></p>
+<h1 id="解释性语言和编译性语言"><a href="#解释性语言和编译性语言" class="headerlink" title="解释性语言和编译性语言"></a>解释性语言和编译性语言</h1><p><code>编译性语言（C/GO...）</code>,在程序运行之前要经过编译器编译，编译后机器保留机器能读懂的二进制文件，当程序运行的时候直接运行二进制，不需重新编译<br><code>解释性语言（JS/Python..）</code>,在每次运行时都要经过解释器动态解释和运行</p>
+<p>编译器和解释器原理：<br><img src="/images/e10bcb4c5b2d5fc20787089de0e10a5.png" alt="编译器和解释器"></p>
+<h2 id="如何执行-JS"><a href="#如何执行-JS" class="headerlink" title="如何执行 JS"></a>如何执行 JS</h2><p>JIT(即时编译 just in time)技术：<br>热点代码会执行编译。<br><img src="/images/bde7952e95c68bba437997ddc92d89f.png" alt="js执行过程"></p>
+<ol>
+<li>逐行解逐行执行</li>
+<li>热点区一次性编译（JIT）<br>字节码需要解释器转换成机器码才能执行</li>
+</ol>
+<blockquote>
+<p>ps: 机器码所需内存比字节码大，但是执行速度快,</p>
+</blockquote>
+<h1 id="ES7"><a href="#ES7" class="headerlink" title="ES7"></a>ES7</h1><ul>
+<li>Array.prototype.includes()</li>
+<li>Math.pow()</li>
+</ul>
+<h1 id="ES8"><a href="#ES8" class="headerlink" title="ES8"></a>ES8</h1><ul>
+<li>async&#x2F;await</li>
+<li>Object.values()</li>
+<li>Object.entries()</li>
+</ul>
+<h1 id="ES9"><a href="#ES9" class="headerlink" title="ES9"></a>ES9</h1><ul>
+<li>异步迭代</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> array) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">doSomething</span>(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Promise.finally()</li>
+<li>Rest&#x2F;Spread 属性</li>
+</ul>
+<h1 id="ES10"><a href="#ES10" class="headerlink" title="ES10"></a>ES10</h1><ul>
+<li>flat()</li>
+<li>flatMap()</li>
+<li>Object.fromEntries()</li>
+<li>BigInt</li>
+</ul>
+<h1 id="ES11"><a href="#ES11" class="headerlink" title="ES11"></a>ES11</h1><ul>
+<li>空值处理 ??</li>
+<li>可选链 ?</li>
+<li>Promise.allSettled</li>
+<li>Dynamic import</li>
+</ul>
+<h1 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h1><p>js 的隐式转换会发生在运算过程，比如<code>+ - * / == &lt; &gt;</code>;<br>简单类型：<br>一般的情况会将两侧转换会数字再进行运算：<br>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="literal">false</span>; <span class="comment">// 1</span></span><br><span class="line"><span class="number">1</span> + <span class="title class_">Number</span>(<span class="literal">false</span>); <span class="comment">// 1 + 0</span></span><br><span class="line"></span><br><span class="line"><span class="number">1</span> == <span class="literal">false</span>;</span><br><span class="line"><span class="number">1</span> == <span class="title class_">Number</span>(<span class="literal">false</span>); <span class="comment">// 1 == 0</span></span><br></pre></td></tr></table></figure>
+
+<p>特殊情况：<br>当 <code>+</code> 号 两个存在字符串，两边会直接当作字符串运算</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">&quot;1&quot;</span>; <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
+
+<p>引用类型：<br>会执行<code>ToPrimitive</code>运算，默认执行 <code>valueOf -&gt; toString</code> 转换基本类型运算</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;&#125;;</span><br><span class="line">a &gt; <span class="literal">false</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">a.<span class="title function_">valueOf</span>(); <span class="comment">// &#123;&#125;</span></span><br><span class="line">a.<span class="title function_">toString</span>(); <span class="comment">// [object Object]</span></span><br><span class="line"><span class="title class_">Number</span>(<span class="string">&quot;[obejct Object]&quot;</span>) &gt; <span class="literal">false</span>; <span class="comment">// NaN &gt; false</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="浏览器窗口通讯"><a href="#浏览器窗口通讯" class="headerlink" title="浏览器窗口通讯"></a>浏览器窗口通讯</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wxyhahaha.github.io/2022/07/01/js/readme/" data-id="cl51viy5f00051svz84qa9ueb" data-title="js" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/01/style/readme/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          style
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/01/http/readme/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">http</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/01/%E9%9D%A2%E8%AF%95/%E6%B7%B1%E4%BF%A1%E6%9C%8D/">深信服</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/vue/readme/">vue</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/typescript/readme/">typescript</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/style/readme/">style</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/js/readme/">js</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 wuxunyu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
