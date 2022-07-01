@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>vue | Learning never ends</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="v-if 和 v-for 的优先级源码： compiler&#x2F;codegen&#x2F;index.js v-for 优先于 v-if 同时出现会先执行 v-for,浪费性能，先循环再判断是否显示（v-if） 源码中 Else if(v-for) Else if (v-if) v-for 明显优先于 v-if data 是一个函数源码： initData() diff源码：mountCom">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue">
+<meta property="og:url" content="https://wxyhahaha.github.io/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/">
+<meta property="og:site_name" content="Learning never ends">
+<meta property="og:description" content="v-if 和 v-for 的优先级源码： compiler&#x2F;codegen&#x2F;index.js v-for 优先于 v-if 同时出现会先执行 v-for,浪费性能，先循环再判断是否显示（v-if） 源码中 Else if(v-for) Else if (v-if) v-for 明显优先于 v-if data 是一个函数源码： initData() diff源码：mountCom">
+<meta property="og:locale">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/image-20211104003501161.png">
+<meta property="article:published_time" content="2022-07-01T06:51:34.345Z">
+<meta property="article:modified_time" content="2022-07-01T11:52:50.476Z">
+<meta property="article:author" content="wuxunyu">
+<meta property="article:tag" content="知识点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxyhahaha.github.io/images/image-20211104003501161.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Learning never ends" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Learning never ends</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wxyhahaha.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-知识点/vue" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/" class="article-date">
+  <time class="dt-published" datetime="2022-07-01T06:51:34.345Z" itemprop="datePublished">2022-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      vue
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="v-if-和-v-for-的优先级"><a href="#v-if-和-v-for-的优先级" class="headerlink" title="v-if 和 v-for 的优先级"></a>v-if 和 v-for 的优先级</h1><p>源码： compiler&#x2F;codegen&#x2F;index.js</p>
+<p>v-for 优先于 v-if</p>
+<p>同时出现会先执行 v-for,浪费性能，先循环再判断是否显示（v-if）</p>
+<p>源码中</p>
+<p>Else if(v-for)</p>
+<p>Else if (v-if)</p>
+<p>v-for 明显优先于 v-if</p>
+<h1 id="data-是一个函数"><a href="#data-是一个函数" class="headerlink" title="data 是一个函数"></a>data 是一个函数</h1><p>源码： initData()</p>
+<h1 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h1><p>源码：mountComponent()</p>
+<p>源码：patchVnode() diff 发生地方，深度优先，同层比较</p>
+<p>源码：updateChildren()</p>
+<p><img src="/images/image-20211104003501161.png" alt="image-20211104003501161"></p>
+<h1 id="vue3-特性"><a href="#vue3-特性" class="headerlink" title="vue3 特性"></a>vue3 特性</h1><ol>
+<li>更快</li>
+</ol>
+<ul>
+<li>虚拟 DOM 重写</li>
+<li>优化 slots 的生成</li>
+<li>静态树的提升</li>
+<li>静态属性的提升</li>
+<li>基于 Proxy 的响应式系统</li>
+</ul>
+<ol start="2">
+<li>更小：通过摇树优化核心库体积</li>
+<li>更容易维护：Typescript + 源码模块化</li>
+<li>更加友好</li>
+</ol>
+<ul>
+<li>跨平台： 编译器核心和运行时核心与平台无关，使得 Vue 更容易与任何平台（Web,Android,IOS）使用</li>
+</ul>
+<ol start="5">
+<li>更容易使用</li>
+</ol>
+<ul>
+<li>改进 Typescript 支持，编辑器能够提供强有力的类型检查和错误及警告</li>
+<li>更改好的调试支持</li>
+<li>独立的响应化模块</li>
+<li>Compostions API</li>
+</ul>
+<h1 id="Vue-性能优化方法"><a href="#Vue-性能优化方法" class="headerlink" title="Vue 性能优化方法"></a>Vue 性能优化方法</h1><ul>
+<li><p>路由懒加载</p>
+</li>
+<li><p>keep-alive</p>
+</li>
+<li><p>使用 v-show 复用 DOM</p>
+</li>
+<li><p>v-for 遍历避免同时使用 v-if</p>
+</li>
+<li><p>长列表性能优化</p>
+<p>使用 Object.freeze()</p>
+</li>
+</ul>
+<p>​ defindProperty configruable &#x3D; false</p>
+<p>​ 虚拟滚动（三方库，vue-virtual-scrlloer）</p>
+<ul>
+<li><p>事件的销毁</p>
+<p>组件本身的事件再销毁的时候会自动销毁。</p>
+<p>但使用定时器等。建议再 beforeDestroy 时卸载定时器，防止内存泄漏</p>
+</li>
+<li><p>图片的懒加载</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// 记录滚动条位置，到达时才显示 <span class="tag">&lt;<span class="name">img</span> <span class="attr">v-lazy</span>=<span class="string">&quot;src&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第三方插件按需引入</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&quot;element-ui&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>无状态的组件标记为函数式组件</li>
+<li>子组件分割<br>切割有动态内容的组件，不会影响其他内容的渲染，有独立的 watcher</li>
+<li>变量本地化<br>在计算属性使用计算属性时，使用赋值变量，减少 computed 中 get 的逻辑运行（缓存处理等）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="title function_">computed</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="title function_">base</span>(<span class="params"></span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">12</span>;</span><br><span class="line">		&#125;,</span><br><span class="line">        <span class="title function_">count</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> base = <span class="variable language_">this</span>.<span class="property">base</span>; <span class="comment">// 不要频繁引用this.base</span></span><br><span class="line">            <span class="keyword">let</span> res = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">return</span> += base;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Virtual-Dom-有哪些优势，为何要设计它"><a href="#Virtual-Dom-有哪些优势，为何要设计它" class="headerlink" title="Virtual Dom 有哪些优势，为何要设计它"></a>Virtual Dom 有哪些优势，为何要设计它</h1><p>DOM 引擎、JS 引擎相互独立，但又工作在一个线程，JS 代码调用 DOM API 必须挂起 JS 引擎，这意味有可能会产生阻塞。且若大量的调用 DOM API，浏览器可能引起大量重绘排版，引起更大的性能消耗</p>
+<p>VDOM 和真实 DOM 的区别和优化：</p>
+<ol>
+<li>VDOM 不会立马进行排版和重绘操作</li>
+<li>VDOM 进行频繁修改，然后一次性比较并修改真实 DOM 需要修改的部分，减少 DOM 节点排版和重绘消耗</li>
+</ol>
+<h1 id="关于-render-不为人知的秘密"><a href="#关于-render-不为人知的秘密" class="headerlink" title="关于 render 不为人知的秘密"></a>关于 render 不为人知的秘密</h1><h1 id="原生操作DOM和通过框架封装操作"><a href="#原生操作DOM和通过框架封装操作" class="headerlink" title="原生操作DOM和通过框架封装操作"></a>原生操作DOM和通过框架封装操作</h1><p>貌似用documentFragment或直接操作dom 性能更好，为什么要使用虚拟dom方式去操作呢？</p>
+<ol>
+<li>性能 vs 维护性</li>
+<li>框架封装的具有描述性目标性</li>
+<li>框架保证 不用你手动优化</li>
+</ol>
+<h1 id="关于render不为人知的秘密"><a href="#关于render不为人知的秘密" class="headerlink" title="关于render不为人知的秘密"></a>关于render不为人知的秘密</h1><ul>
+<li><p>render的结果为一个 Vnode  </p>
+</li>
+<li><p>组件render互不干扰<br>那么问题来了：<br>依赖一当发生变化，那么所在组件渲染的render函数会重新执行，那如果组件里面嵌套组件，当父组件执行render的时候，要重新生成vnode吗，子组件的render不会执行那么也就不会生成vnode，子组件没有新的vnode，patch的时候怎么比对新旧节点？</p>
+</li>
+<li><p>render 的结果为一个 Vnode</p>
+</li>
+<li><p>组件 render 互不干扰<br>那么问题来了：<br>依赖一当发生变化，那么所在组件渲染的 render 函数会重新执行，那如果组件里面嵌套组件，当父组件执行 render 的时候，要重新生成 vnode 吗，子组件的 render 不会执行那么也就不会生成 vnode，子组件没有新的 vnode，patch 的时候怎么比对新旧节点？</p>
+</li>
+</ul>
+<h1 id="关于依赖收集"><a href="#关于依赖收集" class="headerlink" title="关于依赖收集"></a>关于依赖收集</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Dep observer Watch 之间的关系</p>
+<p>先定义响应数据 -&gt; 修改 get -&gt; 在 get 中利用 dep.depend</p>
+<h2 id="computed-缓存和依赖收集原理"><a href="#computed-缓存和依赖收集原理" class="headerlink" title="computed 缓存和依赖收集原理"></a>computed 缓存和依赖收集原理</h2><p>会为每个 <code>computed</code> 属性增加 <code>Watcher</code> 并且改写 <code>Object.definedProperty</code> 的 <code>set</code> 属性,<br>缓存： 当调用 <code>computed</code> 属性时，用 <code>dirty</code> 属性会判断 是否已经执行过，为 <code>true</code> 则重新计算，随后设置为 <code>false</code><br>render 中调用属性时，</p>
+<ol>
+<li><code>watcher.eavalute()</code></li>
+<li><code>popTarget(将 computed watcher 弹出，由渲染 watcher 接管)</code></li>
+<li><code> dirty = false</code></li>
+<li><code> computed watcher.depend()</code></li>
+<li><code>computed dep.depend</code></li>
+<li><code>渲染 watcher.addDep(收集 computed 的依赖)</code></li>
+<li><code> 依赖发生变化， update()</code></li>
+<li><code>dirty = true</code></li>
+<li><code>重新执行 render</code></li>
+<li><code>执行 watcher.eavalute()</code></li>
+</ol>
+<ul>
+<li>关键代码：</li>
+</ul>
+<p>initState</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// computed get</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createComputedGetter</span>(<span class="params">key</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">computedGetter</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> watcher = <span class="variable language_">this</span>.<span class="property">_computedWatchers</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">_computedWatchers</span>[key];</span><br><span class="line">    <span class="keyword">if</span> (watcher) &#123;</span><br><span class="line">      <span class="keyword">if</span> (watcher.<span class="property">dirty</span>) &#123;</span><br><span class="line">        watcher.evaluate();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="title class_">Dep</span>.<span class="property">target</span>) &#123;</span><br><span class="line">        watcher.<span class="title function_">depend</span>();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> watcher.<span class="property">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Watcher</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">evaluate () &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">value</span> = <span class="variable language_">this</span>.<span class="title function_">get</span>()</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">dirty</span> = <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行computed属性函数</span></span><br><span class="line">get () &#123;</span><br><span class="line">  <span class="title function_">pushTarget</span>(<span class="variable language_">this</span>)</span><br><span class="line">  <span class="keyword">let</span> value</span><br><span class="line">  <span class="keyword">const</span> vm = <span class="variable language_">this</span>.<span class="property">vm</span></span><br><span class="line">  value = <span class="variable language_">this</span>.<span class="property">getter</span>.<span class="title function_">call</span>(vm, vm)</span><br><span class="line">  <span class="title function_">popTarget</span>()</span><br><span class="line">  <span class="keyword">return</span> value</span><br><span class="line">&#125;</span><br><span class="line">depend () &#123;</span><br><span class="line">  <span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">deps</span>.<span class="property">length</span></span><br><span class="line">  <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">deps</span>[i].<span class="title function_">depend</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">update () &#123;</span><br><span class="line">  <span class="comment">/* istanbul ignore else */</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">lazy</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dirty</span> = <span class="literal">true</span></span><br><span class="line">  &#125; ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">depend () &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">Dep</span>.<span class="property">target</span>) &#123;</span><br><span class="line">    <span class="title class_">Dep</span>.<span class="property">target</span>.<span class="title function_">addDep</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="生命周期的顺序理解"><a href="#生命周期的顺序理解" class="headerlink" title="生命周期的顺序理解"></a>生命周期的顺序理解</h1><h1 id="基于vue-js-3-响应式原理"><a href="#基于vue-js-3-响应式原理" class="headerlink" title="基于vue.js 3 响应式原理"></a>基于vue.js 3 响应式原理</h1><p>…</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wxyhahaha.github.io/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/" data-id="cl52ehj5f0008n8vzdt5pdnh1" data-title="vue" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/javascript/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          javascript
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据结构和算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/" rel="tag">个人项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">个人项目</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" style="font-size: 20px;">知识点</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 15px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/javascript/">javascript</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/">vue</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E9%9D%A2%E8%AF%95/%E6%B7%B1%E4%BF%A1%E6%9C%8D/">深信服</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E9%9D%A2%E8%AF%95/%E9%A1%B9%E7%9B%AE%E9%9D%A2/">项目面</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 wuxunyu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

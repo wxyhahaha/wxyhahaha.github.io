@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>浏览器进程 | Learning never ends</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="单进程浏览器早期时代的浏览器是单进程的，顾名思义。单进程浏览器是指浏览器的所有功能模块都是运行在同一个进程的，包括网络、插件、js 运行环境、渲染引擎和页面等。 单进程浏览器的架构如下图：问题显而易见：  不稳定： 网络、插件、js 运行环境、渲染引擎和页面任何一个意外的崩溃，都会导致整个浏览器崩溃 不流畅：比如页面线程包含了 js 运行环境，页面渲染，和其他的模块，意味着同一线程同一时刻只能有一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器进程">
+<meta property="og:url" content="https://wxyhahaha.github.io/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/browser/">
+<meta property="og:site_name" content="Learning never ends">
+<meta property="og:description" content="单进程浏览器早期时代的浏览器是单进程的，顾名思义。单进程浏览器是指浏览器的所有功能模块都是运行在同一个进程的，包括网络、插件、js 运行环境、渲染引擎和页面等。 单进程浏览器的架构如下图：问题显而易见：  不稳定： 网络、插件、js 运行环境、渲染引擎和页面任何一个意外的崩溃，都会导致整个浏览器崩溃 不流畅：比如页面线程包含了 js 运行环境，页面渲染，和其他的模块，意味着同一线程同一时刻只能有一">
+<meta property="og:locale">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20223137.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20225146.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20231753.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-06%20221922.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-06%20224852.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20000234.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20000506.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20002407.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20003743.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20003927.png">
+<meta property="og:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20004017.png">
+<meta property="article:published_time" content="2022-07-01T06:51:34.254Z">
+<meta property="article:modified_time" content="2022-07-01T11:52:50.655Z">
+<meta property="article:author" content="wuxunyu">
+<meta property="article:tag" content="知识点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxyhahaha.github.io/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20223137.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Learning never ends" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Learning never ends</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://wxyhahaha.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-知识点/browser" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/browser/" class="article-date">
+  <time class="dt-published" datetime="2022-07-01T06:51:34.254Z" itemprop="datePublished">2022-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      浏览器进程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="单进程浏览器"><a href="#单进程浏览器" class="headerlink" title="单进程浏览器"></a>单进程浏览器</h2><p>早期时代的浏览器是单进程的，顾名思义。<strong>单进程浏览器是指浏览器的所有功能模块都是运行在同一个进程的，包括网络、插件、js 运行环境、渲染引擎和页面等</strong>。</p>
+<p>单进程浏览器的架构如下图：<br><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20223137.png" alt="屏幕截图 2021-11-30 223137"><br>问题显而易见：</p>
+<ol>
+<li><strong>不稳定</strong>： 网络、插件、js 运行环境、渲染引擎和页面任何一个意外的崩溃，都会导致整个浏览器崩溃</li>
+<li><strong>不流畅</strong>：比如页面线程包含了 js 运行环境，页面渲染，和其他的模块，意味着同一线程同一时刻只能有一个模块运行，如果 js 过大，或者进入无限循环，那么其他模块就没有机会运行，造成卡顿的感觉<br><code>页面的内存泄漏</code>也是单进程变慢的原因，运行一个复杂点的页面再关闭页面。会存在内存不能完全回收的情况，这样导致约积占用内存越高，浏览器变得越慢</li>
+<li><strong>不安全</strong>：前面所说，插件的模块也是存在于同一个进程，那么其他模块就有可能收到插件模块的影响，通过插件可以获取系统任意资源，当你在页面运行一个插件时，意味着这个插件能够操作你的电脑，可能释放病毒，窃取密码等</li>
+</ol>
+<h2 id="多进程浏览器"><a href="#多进程浏览器" class="headerlink" title="多进程浏览器"></a>多进程浏览器</h2><p>现在的浏览器就是<code>多进程浏览器</code>，先看看现在的<code>多进程浏览器架构</code>，以<code>Chrome</code>为例，扔一张图看看:</p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20225146.png" alt="屏幕截图 2021-11-30 225146"></p>
+<p>从图中可以看出最新的<code>Chrome</code>浏览器： <code>1个浏览器主进程</code>、<code>1个GPU进程</code>、<code>1个网络进程</code>、<code>多个渲染进程</code>和<code>多个插件进程</code></p>
+<ul>
+<li><strong>浏览器进程</strong>：负责界面显示、子进程管理等，同时提供存储功能，localStorage、cookie、session 能力</li>
+<li><strong>渲染进程</strong>：核心任务将 HTML、CSS 和 JS 转换为网页，排版引擎，V8 引擎都是运行在该进程中，默认情况，一个 tab 创建一个渲染进程，<strong>同域共享同一个渲染进程</strong>，处于安全考虑，运行在沙箱模式下</li>
+<li><strong>GPU 进程</strong>：用于 UI 界面 GPU 绘制</li>
+<li><strong>网络进程</strong>：负责网络资源加载</li>
+<li><strong>插件进程</strong>：负责浏览器插件运行</li>
+<li>等等</li>
+</ul>
+<p>可以看出，多进程的浏览器提升了浏览器的<code>稳定性</code>、<code>流畅性</code>、以及<code>安全性</code>，但不可避免带来一些问题：</p>
+<ul>
+<li>更高的资源占用： 这么多的进程，那么意味着浏览器会消耗更多的内存（其实现在电脑配置都这么高了，这点其实不主要）</li>
+<li>更复杂的体系架构： 浏览器各模块之间的扩展性差等问题，导致现在架构很难适应新需求</li>
+</ul>
+<p>不过有好消息，为了解决以上问题，<code>Chrome</code>团队使用 <strong>面向服务的架构（SOA）</strong> 思想，就是说<code>Chrome</code>整体架构会朝向现代操作系统所采用的 <strong>面向服务的架构（SOA）</strong>，如图：</p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-11-30%20231753.png" alt="20231753"></p>
+<p><code>Chrome</code> 最终要把 UI、文件、设备、网络等模块重构为基础服务，类似操作系统底层服务，这一步正在逐步构建。</p>
+<h1 id="从输入-url-到页面展示，发生了什么？"><a href="#从输入-url-到页面展示，发生了什么？" class="headerlink" title="从输入 url 到页面展示，发生了什么？"></a>从输入 url 到页面展示，发生了什么？</h1><h2 id="用户输入"><a href="#用户输入" class="headerlink" title="用户输入"></a>用户输入</h2><ul>
+<li>判断关键词</li>
+<li>如果是搜索内容，则地址栏会使用浏览器搜索引擎</li>
+<li>如果是符合 <code>URL</code> 规则，则合成完整的 <code>URL</code></li>
+<li>回车之后，浏览器会给当前的页面执行一次 <code>beforeunload</code>，可以用来取消导航</li>
+</ul>
+<h2 id="URL-请求过程"><a href="#URL-请求过程" class="headerlink" title="URL 请求过程"></a>URL 请求过程</h2><ul>
+<li>进入资源请求过程，浏览器进程通过<code>（IPC）</code>把 <code>URL</code> 请求发送到网络进程，网络进程发起请求</li>
+<li>检查本地是否有缓存，如果有直接返回资源给浏览器进程，如果没有，直接进入网络请求</li>
+<li><code>DNS</code> 解析，获取 <code>IP</code> 地址，如果是 <code>HTTPS</code> 还要建立 <code>TLS</code> 连接</li>
+<li>利用 <code>IP</code> 地址建立 <code>TCP</code> 连接，浏览器端构建请求行、请求头，相关域 <code>cookie</code> 等数据加到请求头，向服务器发送请求信息</li>
+<li>服务器根据请求信息生成响应数据，并发给网络进程，然后网络进程开始解析响应头等信息</li>
+</ul>
+<p>(1) 重定向</p>
+<p>如果网络进程在解析响应头，发现状态码是 <code>301</code> 或者 <code>302</code>，那么说明需要浏览器重定向到响应头 <code>Location</code> 指定的 <code>URL</code>，这时，请求再次从头开始</p>
+<p>(2) 响应数据类型处理</p>
+<p>网络进程在解析响应头时，去告诉浏览器，然后根据不同的 <code>Content-Type</code> 类型，来决定如何显示响应体内容。<br>需要注意的时：如果服务器配置 <code>Conent-Type</code> 不正确，<strong>比如将 <code>text/html</code> 类型的配置成 <code>application/octet-stream</code> 类型，那么浏览器会曲解文件内容。一个 <code>html</code> 文件变成了一个下载文件，这时请求就会交给浏览器的下载管理，并不会交给渲染进程</strong>，这个时候<code>导航流程</code>就结束了。如果时 <code>html</code> 文件，那么将继续准备渲染进程</p>
+<h2 id="准备渲染进程"><a href="#准备渲染进程" class="headerlink" title="准备渲染进程"></a>准备渲染进程</h2><ul>
+<li>默认情况，浏览器会为每个页面分配一个渲染进程。有一些情况会复用同一个渲染进程，比如：同域（根域名）的情况。这种策略叫做 <code>process-per-site-instance</code></li>
+<li>准备好之后，等待网络进程请求的资源，准备解析文档</li>
+</ul>
+<h2 id="提交文档"><a href="#提交文档" class="headerlink" title="提交文档"></a>提交文档</h2><p>所谓<strong>提交文档，就是浏览器进程将网络进程接受的 HTML 数据提交给渲染进程</strong>，这个过程，<code>浏览器进程</code>、<code>网络进程</code>和<code>渲染进程</code>时紧密联系的</p>
+<ul>
+<li><code>浏览器进程</code>接收到<code>网络进程</code>的响应头之后，<code>向渲染进程</code>发起<strong>提交文档</strong>的消息</li>
+<li><code>渲染进程</code>收到<strong>提交文档</strong>的信息后，和<code>网络进程</code>建立传输数据的管道</li>
+<li>等<code>渲染进程</code>和<code>网络进程</code>数据传输完成之后，<code>渲染进程</code>会返回<strong>确认提交</strong>的信息给<code>浏览器进程</code></li>
+<li><code>浏览器进程</code>收到<strong>确认提交</strong>之后，会更新浏览器的界面状态，比如，安全状态、前进后退状态、tab 的转圈圈状态</li>
+</ul>
+<h2 id="渲染阶段"><a href="#渲染阶段" class="headerlink" title="渲染阶段"></a>渲染阶段</h2><h3 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 <code>DOM</code> 树</h3><h3 id="样式计算"><a href="#样式计算" class="headerlink" title="样式计算"></a>样式计算</h3><p>样式由：<code>选择器</code>、<code>属性</code>和<code>值</code>组成</p>
+<ol>
+<li>把 <code>CSS</code> 转换为浏览器理解的结构（<code>CSS</code> 样式来源主要有三种）</li>
+</ol>
+<ul>
+<li>通过 link 外部引入</li>
+<li><code>&lt;style&gt;</code>标记内的文件</li>
+<li>元素的 <code>style</code> 属性内联 <code>CSS</code></li>
+</ul>
+<ol start="2">
+<li>转换样式表中的属性值，使其标准化</li>
+</ol>
+<ul>
+<li>比如：<code>em-&gt;px</code>，<code>bold-&gt;700</code>，<code>bule-&gt;rbg(0, 0, 255)</code></li>
+</ul>
+<h3 id="计算出-DOM-树每个节点的具体样式"><a href="#计算出-DOM-树每个节点的具体样式" class="headerlink" title="计算出 DOM 树每个节点的具体样式"></a>计算出 <code>DOM</code> 树每个节点的具体样式</h3><ol>
+<li>计算过程遵循 <code>CSS</code> 的<code>继承</code>和<code>样式层叠</code>两个规则</li>
+</ol>
+<ul>
+<li><p>继承：继承如图 <code>fonst-size</code> 解释：</p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-06%20221922.png" alt="屏幕截图 2021-12-06 221922"></p>
+</li>
+<li><p>样式层叠：它定义了如何合并来自多个源的属性值的算法</p>
+</li>
+</ul>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><ol>
+<li>创建布局树<br>在显示之前，我们还要额外构建一个包含可见元素的<code>布局树</code>，由 <code>DOM</code> 树和 <code>CSS</code> 生成<code>布局树</code></li>
+</ol>
+<ul>
+<li>遍历 <code>DOM</code> 树中可见节点，把节点加到<code>布局树</code>中</li>
+</ul>
+<ul>
+<li>不可见的会被忽略 。如 <code>head</code> 标签下的全部内容、<code>display：none</code> 的元素</li>
+</ul>
+<ol start="2">
+<li>布局计算<br>计算<code>布局树</code>节点的坐标位置，（布局操作时，会把布局计算结果重新写回布局树中）</li>
+</ol>
+<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><p>一些复杂的 3D 变换、页面滚动、或者使用 z-indexing 做 z 轴排序等，还涉及到图层，渲染引擎需要为特定的节点生成专用的图层，并生成一颗对应的图层树（LayerTree）,<br>图层和布局树之间的关系：</p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-06%20224852.png" alt="屏幕截图%202021-11-30%20221332"></p>
+<blockquote>
+<p>不是布局树每个节点都包含一个图层，节点没有对应的图层，则从属父节点的图层。</p>
+</blockquote>
+<p>满足下面任意条件，渲染引擎会为其创建新的图层：</p>
+<ol>
+<li>拥有层叠上下文属性的元素<ul>
+<li><code>position</code> 值为 <code>absolute（绝对定位）</code>或 <code>relative（相对定位</code>）且 <code>z-index</code> 值不为 <code>auto</code> 的元素</li>
+<li><code>position</code> 值为 <code>fixed（固定定位）</code>或 <code>sticky（粘滞定位）</code>的元素</li>
+</ul>
+</li>
+<li>需要剪裁（clip）的地方<ul>
+<li>出现滚动条，滚动条也会被提升为单独层</li>
+<li>元素设置 <code>overflow:auto</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="图层绘制"><a href="#图层绘制" class="headerlink" title="图层绘制"></a>图层绘制</h3><p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20000234.png" alt="屏幕截图%202021-12-07%20000234"></p>
+<p><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20000506.png" alt="屏幕截图%202021-12-07%20000506"></p>
+<p>在该图中，区域 1 就是 document 的绘制列表，拖动区域 2 中的进度条可以重现列表的绘制过程。</p>
+<h3 id="栅格化（raster）操作"><a href="#栅格化（raster）操作" class="headerlink" title="栅格化（raster）操作"></a>栅格化（raster）操作</h3><p>绘制列表只是用来记录绘制顺序和绘制指令的列表，<strong>实际上绘制操作是由渲染引擎中的合成线程来完成的</strong>。</p>
+<ul>
+<li><code>合成线程</code>将图层划分为图块</li>
+<li><code>合成线程</code>会按照视口附近的图块优先生成位图，所谓栅格化，是指将图块转化为位图</li>
+<li>渲染进程维护一个栅格化的线程池，图块栅格化在该线程池执行</li>
+<li>栅格化使用 <code>GPU</code> 加速生成（<code>GPU 栅格化</code>或者<code>快速栅格化</code>），生成位图在 <code>GPU</code> 进程执行，生成的位图保存在 <code>GPU</code> 内存</li>
+<li>涉及到跨进程操作，<code>渲染进程</code>-&gt;<code>GPU进程</code>，以下图参考：<br><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20002407.png" alt="屏幕截图%202021-12-07%20002407"></li>
+</ul>
+<h3 id="合成和显示"><a href="#合成和显示" class="headerlink" title="合成和显示"></a>合成和显示</h3><p>所有图块都被栅格化，合成线程就会生成一个绘制图块的命令——<code>DrawQuad</code>，提交给浏览器进程，最终将页面绘制到内存中，再将内存显示在屏幕上</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>渲染进程将 <code>HTML</code> 内容转换为能够读懂的 <strong><code>DOM</code> 树</strong>结构。</li>
+<li>渲染引擎将 <strong><code>CSS</code> 样式表转化</strong>为浏览器可以理解的 <code>styleSheets</code>，计算出 <code>DOM</code> 节点的样式。</li>
+<li>创建<strong>布局树</strong>，并计算元素的布局信息。</li>
+<li>对布局树进行分层，并生成<strong>分层树</strong>。</li>
+<li>为每个图层生成<strong>绘制列表</strong>，并将其提交到合成线程。</li>
+<li>合成线程将图层分成<strong>图块</strong>，并在<strong>光栅化线程池</strong>中将图块转换成位图。</li>
+<li>合成线程发送绘制图块命令 <strong><code>DrawQuad</code></strong> 给浏览器进程。</li>
+<li>浏览器进程根据 <code>DrawQuad</code> 消息<strong>生成页面</strong>，并显示到显示器上。</li>
+</ol>
+<h1 id="回流和重绘"><a href="#回流和重绘" class="headerlink" title="回流和重绘"></a>回流和重绘</h1><ol>
+<li><strong>了解浏览器的渲染机制</strong></li>
+</ol>
+<ul>
+<li>浏览器采用<code>流式布局模型</code></li>
+<li>浏览器会将 HTML 解析成<code>DOM</code>，把<code>CSS</code>解析成<code>CSSOM</code>，把<code>CSSOM</code>和<code>DOM</code>结合成一个<code>render tree</code></li>
+<li>有了<code>render tree</code>之后，就知道了节点样式，然后浏览器会计算节点的位置，然后再绘制再页面上</li>
+</ul>
+<ol start="2">
+<li><strong>回流</strong>：当我们<code>render tree</code>中的一些元素的结构或者尺寸等发生改变，浏览器重新渲染部分或者全部文档的过程就做<code>回流</code>，导致回流的操作如下</li>
+</ol>
+<ul>
+<li>页面首页渲染</li>
+<li>浏览器窗口大小变化</li>
+<li>内容变化</li>
+<li>添加或者删除节点</li>
+<li>激活 CSS 伪类</li>
+<li>等等</li>
+</ul>
+<ol start="3">
+<li><strong>重绘</strong>：当页面中样式的改变不影响它在文档中的位置，浏览器会将新样式赋予给元素，这个过程叫做<code>重绘</code>，导致重绘的操作如下</li>
+</ol>
+<ul>
+<li>background…</li>
+<li>visibility</li>
+<li>等等</li>
+</ul>
+<ol start="4">
+<li><strong>性能影响</strong>：回流的性能消耗比重绘大</li>
+<li><strong>避免性能影响</strong></li>
+</ol>
+<p>CSS:</p>
+<ul>
+<li>避免使用<code>table</code>布局</li>
+<li>避免设置多层内联样式</li>
+</ul>
+<p>JS:</p>
+<ul>
+<li>避免大量频繁操作<code>DOM</code></li>
+<li>对于大量插入<code>DOM</code>的操作，建议使用文档片段，也就是<code>documentFragment</code></li>
+</ul>
+<ol start="6">
+<li>结合图来看：<ul>
+<li>回流<br><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20003743.png" alt="屏幕截图%202021-12-07%20003743"></li>
+<li>重绘<br><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20003927.png" alt="屏幕截图%202021-12-07%20003927"></li>
+<li>直接合成（相对回流和重绘大大提升绘制效率）<br><img src="/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-12-07%20004017.png" alt="屏幕截图%202021-12-07%20004017"></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://wxyhahaha.github.io/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/browser/" data-id="cl52ehj5d0003n8vz8pt5fo22" data-title="浏览器进程" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BD%91%E7%BB%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          网络
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">抽象语法树</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/" rel="tag">个人项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag">知识点</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">个人项目</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/" style="font-size: 20px;">知识点</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 15px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/javascript/">javascript</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/">vue</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E9%9D%A2%E8%AF%95/%E6%B7%B1%E4%BF%A1%E6%9C%8D/">深信服</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/01/%E9%9D%A2%E8%AF%95/%E9%A1%B9%E7%9B%AE%E9%9D%A2/">项目面</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 wuxunyu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
