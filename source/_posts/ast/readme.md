@@ -1,0 +1,210 @@
+---
+title: ast
+--- 
+# ast
+
+abstract syntax tree, 抽象语法树
+
+# 常见结构
+
+- FunctionDeclaration 函数
+  - id{}
+  - body{}[]
+- ClassDeclaration 类
+  - id{}
+  - body{}[]
+    - ClassProperty
+      - key{}
+      - value
+    - ClassMethod
+      - key
+      - body{}
+- VariableDeclaration 变量声明
+  - declarations{}[]
+  - kind
+- VariableDeclarator 变量说明符
+  - id{}
+  - init{}
+- returnStatement
+  - argument{}
+- ExpressionStatement 表达式
+  - expression{}
+- CallExpression 调用表达式
+  - callee{}
+  - arguments[]
+- MemberExpression 成员调用表达式
+  - object{}
+  - property{}
+- BinaryExpression 运算符表达式
+  - left
+  - operator
+  - right
+- ConditionalExpression 条件运算符表达式
+  - test{}
+  - consequent{}
+  - alternate{}
+- ObjectExpression 对象表达式
+- ArrayExpression 数组表达式
+  - elements[]
+- UnaryExpression 元表达式
+  - operator
+  - argument
+- Identifier
+  - name
+- Literal
+  - value
+
+## 应用
+
+尝试解析一个 json
+
+```js
+const { Parser } = require("acorn");
+const fs = require("fs");
+/**store*/
+class Base {
+  shopOptions = [];
+}
+
+class Handle {
+  constructor(base) {
+    this.base = base;
+  }
+  async getShopOptions(platform, shopId) {
+    return 2;
+  }
+  getSkuWeight() {}
+}
+
+class Compile {
+  constructor(handle) {
+    this.handle = handle;
+  }
+  config = {
+    events: {
+      "base.shopOptions": "a.f.sd"
+    },
+  };
+
+  async execute() {
+    const events = this.config.events;
+    for (let [key, value] of Object.entries(events)) {
+      this.genFile(key, key);
+      this.genFile(key+'2', value);
+      const [context, expression] = value.includes(".")
+        ? expression.split(".")
+        : [this.handle, value];
+      const res = this.parse(this.handle, value);
+      if (key.indexOf(".") > -1) {
+        const [_context, option] = key.split(".");
+        try {
+          this.handle[_context][option] = await res;
+        } catch (error) {
+          console.error(`${_context}中不存在${option}`);
+        }
+      } else if (key.indexOf("void") > -1) {
+        await res;
+      }
+    }
+  }
+
+  genFile(name, expression) {
+    fs.writeFileSync(
+      `./${name}.json`,
+      JSON.stringify(Parser.parse(expression), null, "  ")
+    );
+  }
+
+  parse(context, expression) {
+    const ast = Parser.parse(expression);
+    const body = ast.body[0];
+    if (body.type === "ExpressionStatement") {
+      console.log('expression11111111111111111111111', expression);
+      return this.executeExpression(context, body.expression);
+    } else {
+      throw new Error(`不支持${body.type}类型`);
+    }
+  }
+
+  executeExpression(context, expression) {
+    switch (expression.type) {
+      case "CallExpression":
+        return this.executeCallExpression(context, expression);
+      case "MemberExpression":
+        return this.executeMemberExpression(context, expression);
+      case "BinaryExpression":
+        return this.executeBinaryExpression(context, expression);
+      case "ConditionalExpression":
+        return;
+      case "ObjectExpression":
+        return;
+      case "ArrayExpression":
+        return;
+      case "Literal":
+        return expression.value;
+      case "UnaryExpression":
+        return this.executeUnaryExpression(context, expression);
+      case "Identifier": 
+      return expression.value;
+        default:
+        throw new Error(`不支持类型${expression.type}`);
+    }
+  }
+
+  executeMemberExpression(context, expression)  {
+    const object = this.executeExpression(context, expression.object);
+    console.log(object);
+    // return `${object.name}.${expression.property.value}`
+  }
+
+  executeCallExpression(context, expression) {
+    const callee = this.executeExpression(context, expression.callee);
+    return context[callee.name](
+      ...expression.arguments.map((v) => v.value)
+    );
+  }
+
+  async executeBinaryExpression(context, expression) {
+    const left = await this.executeExpression(context, expression.left);
+    const right = await this.executeExpression(context, expression.right);
+    switch (expression.operator) {
+      case "+":
+        return left + right;
+      case "-":
+        return left - right;
+      case "*":
+        return left * right;
+      case "/":
+        return left / right;
+      case ">":
+        return left > right;
+      case "<":
+        return left < right;
+      case ">=":
+        return left >= right;
+      case "<=":
+        return left <= right;
+      case "==":
+        return left == right;
+      case "===":
+        return left === right;
+    }
+  }
+
+  async executeUnaryExpression(context, expression) {
+    const right = await this.executeExpression(context, expression.argument);
+    switch (expression.operator) {
+      case "!":
+        return !right;
+      case "-":
+        return -right;
+      case "+":
+        return +right;
+    }
+  }
+}
+const base = new Base();
+const handle = new Handle(base);
+const compile = new Compile(handle);
+compile.execute();
+```

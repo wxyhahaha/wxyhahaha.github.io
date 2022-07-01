@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keepeact</title>
+  <!-- <link rel="stylesheet" href="https://wxyhahaha.github.io/public/css/highlight.css"> -->
+  <!-- <link rel="stylesheet" href="https://wxyhahaha.github.io/public/css/markdown.css"> -->
+  <!-- <style>
+    .markdown {
+      width: 800px;
+      overflow-x: auto;
+    }
+  </style> -->
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <div id="demo"></div>
+  </div>
+
+  <div class="markdown">
+    <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wrapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>demo<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> WelCome <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../keepeact.js'</span><span class="token punctuation">;</span>
+WelCome<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#demo'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token function">valueChange</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'coutn:'</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</code></pre>
+  </div>
+
+  <div class="markdown">
+    <pre><code class="language-tsx"><span class="token operator">/</span><span class="token operator">/</span> Button
+import { ValueComponent<span class="token punctuation">,</span> Component<span class="token punctuation">,</span> Watch<span class="token punctuation">,</span> Prop<span class="token punctuation">,</span> Ref } from <span class="token string">'keepeact'</span><span class="token comment" spellcheck="true">;</span>
+@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+export <span class="token keyword">default</span> class Button extends ValueComponent {
+count <span class="token operator">=</span> <span class="token number">0</span><span class="token comment" spellcheck="true">;</span>
+showStop <span class="token operator">=</span> <span class="token boolean">true</span><span class="token comment" spellcheck="true">;</span>
+@<span class="token function">Prop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> defaultCount<span class="token punctuation">:</span> number<span class="token comment" spellcheck="true">;</span>
+@<span class="token function">Prop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> max<span class="token punctuation">:</span> number <span class="token operator">=</span> <span class="token number">3</span><span class="token comment" spellcheck="true">;</span>
+@<span class="token function">Ref</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span> buttonEl<span class="token punctuation">:</span> HTMLElement<span class="token comment" spellcheck="true">;</span>
+@<span class="token function">Watch</span><span class="token punctuation">(</span><span class="token string">'count'</span><span class="token punctuation">,</span> {
+  immediate<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+}<span class="token punctuation">)</span>
+<span class="token function">countChange</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> {
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'监测 count:'</span><span class="token punctuation">,</span> `oldValue<span class="token punctuation">:</span> ${a}`<span class="token punctuation">,</span> `newValue<span class="token punctuation">:</span> ${b}`<span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+  this<span class="token punctuation">.</span>showStop <span class="token operator">=</span> this<span class="token punctuation">.</span>count <span class="token operator">></span> this<span class="token punctuation">.</span>max<span class="token comment" spellcheck="true">;</span>
+}
+
+get <span class="token function">countValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> {
+  return this<span class="token punctuation">.</span>showStop <span class="token operator">?</span> <span class="token string">'stop'</span> <span class="token punctuation">:</span> this<span class="token punctuation">.</span>count<span class="token comment" spellcheck="true">;</span>
+}
+
+<span class="token function">button</span><span class="token punctuation">(</span><span class="token punctuation">)</span> {
+  this<span class="token punctuation">.</span>$<span class="token function">nextTick</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> {
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>buttonEl<span class="token punctuation">.</span>innerText<span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+  }<span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+  return <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>button
+      onClick<span class="token operator">=</span>{<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> {
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>this<span class="token punctuation">.</span>showStop<span class="token punctuation">)</span> return<span class="token comment" spellcheck="true">;</span>
+        this<span class="token punctuation">.</span>count<span class="token operator">+</span><span class="token operator">+</span><span class="token comment" spellcheck="true">;</span>
+        this<span class="token punctuation">.</span><span class="token function">onChange</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+      }}
+    <span class="token operator">></span>
+      click<span class="token operator">+</span><span class="token number">1</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+}
+<span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> {
+  return <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"wuxunyu"</span> ref<span class="token operator">=</span><span class="token string">"button"</span><span class="token operator">></span>
+      {this<span class="token punctuation">.</span>countValue} {this<span class="token punctuation">.</span><span class="token function">button</span><span class="token punctuation">(</span><span class="token punctuation">)</span>}
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+}
+}
+</code></pre>
+
+
+  </div>
+
+  <div class="markdown">
+    <pre><code class="language-tsx"><span class="token operator">/</span><span class="token operator">/</span> WelCome
+import { Component<span class="token punctuation">,</span> ValueComponent } from <span class="token string">'keepeact'</span><span class="token comment" spellcheck="true">;</span>
+import Button from <span class="token string">'./button/button.component'</span><span class="token comment" spellcheck="true">;</span>
+
+@<span class="token function">Component</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+export <span class="token keyword">default</span> class WelCome extends ValueComponent {
+max <span class="token operator">=</span> <span class="token number">6</span><span class="token comment" spellcheck="true">;</span>
+<span class="token function">buttonDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> {
+  return <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>Button
+      valueChange<span class="token operator">=</span>{<span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> {
+        this<span class="token punctuation">.</span><span class="token function">onChange</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+      }}
+      max<span class="token operator">=</span>{this<span class="token punctuation">.</span>max}
+    <span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+}
+<span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> {
+  <span class="token keyword">const</span> welcomeWrapper <span class="token operator">=</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>WelCome <span class="token keyword">to</span> Keepeact<span class="token punctuation">,</span> I wish you like it<span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+        <span class="token operator">&lt;</span>p<span class="token operator">></span>demo<span class="token punctuation">:</span>  well stop<span class="token punctuation">,</span> <span class="token keyword">if</span> count {<span class="token string">'>'</span>} {this<span class="token punctuation">.</span>max}<span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>ul<span class="token operator">></span>
+        <span class="token operator">&lt;</span>li<span class="token operator">></span>{this<span class="token punctuation">.</span><span class="token function">buttonDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>}<span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>ul<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token comment" spellcheck="true">;</span>
+  return welcomeWrapper<span class="token comment" spellcheck="true">;</span>
+}
+}
+
+</code></pre>
+
+    
+  </div>
+
+</body>
+<script type="module">
+  import { WelCome } from '../keepeact.js';
+  WelCome.create(document.querySelector('#demo'), {
+    valueChange(e) {
+      console.log('coutn:', e);
+    }
+  })
+</script>
+
+</html>
