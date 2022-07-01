@@ -1,6 +1,6 @@
 ---
 title: vue
-tags: 面试
+tags: 知识点
 --- 
 # v-if 和 v-for 的优先级
 

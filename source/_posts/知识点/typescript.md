@@ -1,6 +1,6 @@
 ---
 title: typescript
-tags: 面试
+tags: 知识点
 --- 
 # type 和 interface 区别
 
