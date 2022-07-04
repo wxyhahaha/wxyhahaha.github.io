@@ -2,6 +2,7 @@
 title: typescript
 date: 2022-05-04 11:08:20
 tags: 知识点
+categories: [javascript, typescript]
 --- 
 ## type 和 interface 区别
 

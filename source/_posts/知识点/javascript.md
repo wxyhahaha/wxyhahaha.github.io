@@ -2,6 +2,7 @@
 title: javascript
 date: 2022-05-04 11:08:20
 tags: 知识点
+categories: [javascript, 基础知识]
 ---
 
 ## 内存机制
