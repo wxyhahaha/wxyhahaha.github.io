@@ -8,17 +8,16 @@
   <title>Keepeact</title>
   <!-- <link rel="stylesheet" href="https://wxyhahaha.github.io/public/css/highlight.css"> -->
   <!-- <link rel="stylesheet" href="https://wxyhahaha.github.io/public/css/markdown.css"> -->
-  <!-- <style>
+  <style>
     .markdown {
-      width: 800px;
-      overflow-x: auto;
+      margin-bottom: 16px
     }
-  </style> -->
+  </style>
 </head>
 
 <body>
 
-  <div id="wrapper">
+  <div id="wrapper" style="margin-bottom: 16px">
     <div id="demo"></div>
   </div>
 
@@ -29,7 +28,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
-<span class="token keyword">import</span> <span class="token punctuation">{</span> WelCome <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../keepeact.js'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> WelCome <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'/js/keepeact.js'</span><span class="token punctuation">;</span>
 WelCome<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#demo'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
   <span class="token function">valueChange</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'coutn:'</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -129,10 +128,10 @@ max <span class="token operator">=</span> <span class="token number">6</span><sp
 
 </body>
 <script type="module">
-  import { WelCome } from '../keepeact.js';
+  import { WelCome } from '/js/keepeact.js';
   WelCome.create(document.querySelector('#demo'), {
     valueChange(e) {
-      console.log('coutn:', e);
+      console.log('count:', e);
     }
   })
 </script>

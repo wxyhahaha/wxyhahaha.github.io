@@ -936,7 +936,7 @@ let WelCome = class extends ValueComponent {
     });
   }
   render() {
-    const welcomeWrapper = /* @__PURE__ */ createVNode("div", null, /* @__PURE__ */ createVNode("p", null, "WelCome to Keepeact,  ."), /* @__PURE__ */ createVNode("p", null, "demo:  well stop, if count ", ">", " ", this.max), /* @__PURE__ */ createVNode("ul", null, /* @__PURE__ */ createVNode("li", null, this.buttonDemo())));
+    const welcomeWrapper = /* @__PURE__ */ createVNode("div", null, /* @__PURE__ */ createVNode("p", null, "WelCome to Keepeact."), /* @__PURE__ */ createVNode("p", null, "demo:  well stop, if count ", ">", " ", this.max), /* @__PURE__ */ createVNode("ul", null, /* @__PURE__ */ createVNode("li", null, this.buttonDemo())));
     return welcomeWrapper;
   }
 };

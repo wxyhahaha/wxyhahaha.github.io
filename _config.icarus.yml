@@ -109,6 +109,7 @@ navbar:
         首页: /
         文章: /archives
         标签: /tags
+        Keepeact Demo: /keepeact/demo
     # Links to be shown on the right of the navigation bar
     links:
         # Download on GitHub:
