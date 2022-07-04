@@ -2,7 +2,13 @@
 title: keepeact
 date: 2022-07-04 11:08:20
 tags: 个人项目
+cover: /images/Keep-banner.png
+thumbnail: /images/Keep-banner.png
 ---
+
+## 前言
+
+`keepeact` 受 `jsx`, `vue-decorator-property` 和 `vue的数据劫持机制` 启发, 名字来源自 `keep`, 保持积极向上的学习态度, 又因为是 `jsx` 所以自然而然是取 `react`, 合起来便是 `keepeact`
 
 ## 简介
 
