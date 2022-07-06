@@ -49,27 +49,28 @@ obj.foo;
 
 那么 `Proxy` 是常规对象还是异质对象？
 
-首先要查阅 `ECMAScript` 对 `Proxy` 的定义:  
+首先要查阅 `ECMAScript` 对 `Proxy` 的定义:
 
 ![table 3: Proxy对象部署的内部方法](/images/Proxy.png)
 
-由此可以看出 Proxy 内部实现的方法和`table 1` ，`table 2`中的方法一样，举个例子:  
+由此可以看出 Proxy 内部实现的方法和`table 1` ，`table 2`中的方法一样，举个例子:
 
 ```js
-const obj = new Proxy({foo: 1});
-obj.foo 
+const obj = new Proxy({ foo: 1 });
+obj.foo;
 ```
+
 同样的，引擎内部会调用部署到代理对象中的`[[Get]]`内部方法读取属性值，虽然会部署相同的内部方法，但是行为却是不同，也就是当创建代理对象的时候没有指定的对应拦截函数，那么就会调用原始的方法，在该例子中没有指定 `get()`，那么当读取时就会调用原始对象的`[[Get]]`方法，从`[[Get]]`就可以看出，`Proxy是一个异质对象`，因为并没有按照 `table 1`中的规范来
 
 > ECMAScript 原文
-> `A Proxy object is an exotic object(异质对象)` whose essential internal methods are partially implemented using ECMAScript code. 
+> `A Proxy object is an exotic object(异质对象)` whose essential internal methods are partially implemented using ECMAScript code.
 >
 > When a handler method is called to provide the implementation of a Proxy object internal method, the handler method is passed the proxy's target object as a parameter. A proxy's handler object does not necessarily have a method corresponding to every essential internal method. Invoking an internal method on the proxy results in the invocation of the corresponding internal method on the proxy's target object if the handler object does not have a method corresponding to the internal trap.
 > [https://262.ecma-international.org/13.0/#sec-proxy-object-internal-methods-and-internal-slots](https://262.ecma-international.org/13.0/#sec-proxy-object-internal-methods-and-internal-slots)
 
-## 如何利用Proxy代理并拦截Object
+## 如何代理 Object
 
-前文中我们提到 `get()` 去拦截对象的读取，那在读取的概念中时很广泛的，很多操作都暗藏着读取，下面列举可能读取对象属性的行为:  
+前文中我们提到 `get()` 去拦截对象的读取，那在读取的概念中时很广泛的，很多操作都暗藏着读取，下面列举可能读取对象属性的行为:
 
 - 属性访问： `obj.foo`
 - in 操作符： `'foo' in obj`
@@ -77,21 +78,25 @@ obj.foo
 
 ### obj.foo
 
-对于普通的属性访问，我们都知道会被 `get()` 拦截:  
+对于普通的属性访问，我们都知道会被 `get()` 拦截:
 
 ```js
-const obj = new Proxy({foo: 1}, {
-  get(target, key) { // target 为原对象
-    return tartget[key];
+const obj = new Proxy(
+  { foo: 1 },
+  {
+    get(target, key) {
+      // target 为原对象
+      return tartget[key];
+    },
   }
-});
+);
 
-obj.foo
+obj.foo;
 ```
 
 ### 'foo' in obj
 
-对于 `in` 操作符，应该如何拦截呢？还是要去查 `ECMAScript` 规范 对于 `in` 的定义:  
+对于 `in` 操作符，应该如何拦截呢？还是要去查 `ECMAScript` 规范 对于 `in` 的定义:
 
     ShiftExpression in RelationalExpression
     1. 让 lref 是计算 RelationalExpression 的结果。
@@ -104,22 +109,26 @@ obj.foo
 > ECMAScript 原文
 > https://262.ecma-international.org/13.0/#sec-relational-operators
 
-重点在第 `6` 步， 查看 `table 3`中的 `HasProperty`，对应的拦截函数为 `has`，那么我们就可以对 `in` 操作符进行拦截了:  
+重点在第 `6` 步， 查看 `table 3`中的 `HasProperty`，对应的拦截函数为 `has`，那么我们就可以对 `in` 操作符进行拦截了:
 
 ```js
-const obj = new Proxy({foo: 1}, {
-  has(target, key) { // target 为原对象
-    const has = !!tartget[key];
-    return has; // true or false
+const obj = new Proxy(
+  { foo: 1 },
+  {
+    has(target, key) {
+      // target 为原对象
+      const has = !!tartget[key];
+      return has; // true or false
+    },
   }
-});
+);
 
-'foo' in obj
+'foo' in obj;
 ```
 
 ### for ... in obj
 
-再来看看 `ECMAScript` 对 `for ... in` 的部分定义:  
+再来看看 `ECMAScript` 对 `for ... in` 的部分定义:
 
     6. 如果iterationKind为enumerate，则
         a. 如果exprValue为undefined或null 则
@@ -127,13 +136,13 @@ const obj = new Proxy({foo: 1}, {
         b. 让 obj 为 ToObject (exprValue) 的结果
         c. 让  iterator 为 EnumerateObjectProperties(obj)
 
-重点看 第 `6` 点中的 `c`， EnumerateObjectProperties：  
+重点看 第 `6` 点中的 `c`， EnumerateObjectProperties：
 
 ```js
 function* EnumerateObjectProperties(obj) {
   const visited = new Set();
   for (const key of Reflect.ownKeys(obj)) {
-    if (typeof key === "symbol") continue;
+    if (typeof key === 'symbol') continue;
     const desc = Reflect.getOwnPropertyDescriptor(obj, key);
     if (desc) {
       visited.add(key);
@@ -149,20 +158,64 @@ function* EnumerateObjectProperties(obj) {
 ```
 
 > ECMAScript 原文
-> [14.7.5.6 ForIn/OfHeadEvaluation](https://262.ecma-international.org/13.0/#sec-runtime-semantics-forinofheadevaluation)
-> [EnumerateObjectProperties](https://262.ecma-international.org/13.0/#sec-enumerate-object-properties)
+> [14.7.5.6 ForIn/OfHeadEvaluation](https://262.ecma-international.org/13.0/#sec-runtime-semantics-forinofheadevaluation) > [EnumerateObjectProperties](https://262.ecma-international.org/13.0/#sec-enumerate-object-properties)
 
-可以看出 `for ... in` 内部调用了 `ownKeys` 这个方法，那么我们就可以对其拦截了：  
+可以看出 `for ... in` 内部调用了 `ownKeys` 这个方法，那么我们就可以对其拦截了：
 
 ```js
-const obj = new Proxy({foo: 1}, {
-  ownKeys (target) {
-    return Reflect.ownKeys(target); // ['foo']
+const obj = new Proxy(
+  { foo: 1 },
+  {
+    ownKeys(target) {
+      return Reflect.ownKeys(target); // ['foo']
+    },
   }
-});
+);
 
-for( value in obj) {
+for (key in obj) {
 }
 ```
 
-最后我们成功拦截了这三个行为，如果还要其他需要拦截的，最主要的还是要去翻阅 [ECMAScript](https://tc39.es/ecma262/) ，文章还提到了 `Reflect`，这个方法提供了访问一个对象的默认行为，详细的就不再赘叙。
+## 如何代理数组
+
+数组是一个特殊的对象，它对某一类属性名进行特殊处理，既然是一个对象，那么它内部方法基本和 `table 1` 一致，不同的是 `[[DefineOwnProperty]]` 方法的处理不同，这也说明了数组是一个 `异质对象`
+
+> ECMAScript 原文
+> [https://262.ecma-international.org/13.0/#sec-array-exotic-objects](https://262.ecma-international.org/13.0/#sec-array-exotic-objects)
+
+同样的，我们需要知道在数组中读取的行为有哪些，下面列举了部分`读取`操作：
+
+- 通过索引访问值： `arr[0]`
+- 访问数组长度 length：`arr.length`
+- 把数组当对象：`用 for ... in 遍历`
+- `for ... of 迭代遍历`
+- 数组原型方法：`contact/join/every/some/find/includes` 等等，以及不改变原数组的方法
+
+再看看有哪些涉及到元素的`设置`的操作：
+
+- 通过索引修改数组元素值： `arr[0] = 'bar'`
+- 修改数组长度： `arr.length = 0`
+- 栈方法： `push/pop/shift/unshift`
+- 修改原数组方法： `splice/sort 等`
+
+
+既然除了 `[[DefineOwnProperty]]` ，其他内部方法都一致，说明了同样的劫持方法在数组同样生效
+
+```js
+const proxy = new Proxy(['foo'], {
+  get(target, key) {
+    return tartget[key];
+  },
+  ownKeys(target) {
+    return Reflect.ownKeys(target); // ['foo']
+  },
+});
+
+proxy[0]; // get
+for (key in obj) { // ownKeys
+}
+```
+
+> 对于对象和数组涉及到修改的，都会经过 `set` 拦截函数，可以自己去尝试~ 
+
+文章还提到了 `Reflect`，这个方法提供了访问一个对象的默认行为，详细的就不再赘叙。最后，我们成功拦截了对象和数组，如其他需要拦截，最主要的还是要去翻阅 [ECMAScript](https://tc39.es/ecma262/) 
