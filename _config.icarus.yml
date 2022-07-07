@@ -241,6 +241,9 @@ widgets:
             Github:
                 icon: fab fa-github
                 url: https://github.com/wxyhahaha
+            知乎:
+                icon: fab fa-zhihu
+                url: https://www.zhihu.com/people/shang-di-ye-feng-kuang-47
     # Table of contents widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
