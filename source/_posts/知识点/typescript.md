@@ -519,10 +519,12 @@ type C = {
   b: number;
 };
 
-type Re = A | B extends C ? 'a' : 'null'; // null
+type Re = A | B extends C ? 'a' : 'b'; // b
 ```
 
-`A` 和 `B` 必须都满足 `C` 中的成员才成立，但有一种特殊的条件联合类型，`泛型的联合类型`
+`A` 和 `B` 必须都满足 `C` 中的成员才成立，显然上面例子不成立，还有一种特殊的条件联合类型`泛型的联合类型`
+
+泛型的联合类型：
 
 同样的 `A / B / C`，但是将 `Re` 改成泛型：
 
@@ -538,9 +540,9 @@ let re: Re<A | B>; // a | b
 let re: Re<A | B>;
 // 拆解
 let re: Re<A> | Re<B>; // a | b
-let re: A extends C ? 'a' : 'b' | B extends C ? 'a' : 'b'; // a | b
+let re: (A extends C ? 'a' : 'b') | (B extends C ? 'a' : 'b'); // a | b
 ```
-
+`A` 满足 `C` ， 但 `B` 不满足 `C` ,所以 `re` 的值 可能为 `a` 或 `b`
 ## 重写属性类型
 
 有些时候，可能会对某一类库的类型进行二次开发，发现某一个属性的类型不符合我们预期，我们可以引用类库的类型，并且对属性进行重写类型比如
